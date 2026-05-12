@@ -209,6 +209,21 @@
   animation-delay: -8s;
 }
 
+/* Topology graph overlay — soft “live network” shimmer */
+@keyframes topology-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@utility animate-topology-pulse {
+  animation: topology-pulse 10s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-portfolio-enter,
   .animate-backdrop-boot {
@@ -229,7 +244,8 @@
   .animate-noc-radial-b,
   .animate-noc-radial-c,
   .animate-light-radial-a,
-  .animate-light-radial-b {
+  .animate-light-radial-b,
+  .animate-topology-pulse {
     animation: none !important;
   }
 }
