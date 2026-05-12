@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  /* Single sans stack site-wide — no separate monospace UI font */
+  --font-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #f1f5f9;
+  }
+
+  body {
+    @apply text-[#1a1a1a] antialiased;
+  }
+
+  html.portfolio-noc {
+    background-color: #030508;
+  }
+
+  html.portfolio-noc body {
+    @apply text-slate-100 antialiased;
+  }
+}
+
+/* RF / “cell site” ripple — modern wireless metaphor */
+@keyframes net-ripple {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.48;
+  }
+  55% {
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+
+@utility animate-net-ripple {
+  animation: net-ripple 9s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+@utility animate-net-ripple-slow {
+  animation: net-ripple 12.5s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+/* Spectrum bar drift (DWDM / optical lane feel) */
+@keyframes spectrum-shift {
+  0% {
+    transform: translate3d(-18%, 0, 0) rotate(-14deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate3d(18%, 0, 0) rotate(-14deg);
+    opacity: 0.5;
+  }
+}
+
+@utility animate-spectrum-shift {
+  animation: spectrum-shift 22s ease-in-out infinite alternate;
+}
+
+/* Diamond / isometric weave — slow drift */
+@keyframes mesh-drift {
+  to {
+    background-position:
+      140px 0,
+      210px 70px;
+  }
+}
+
+@utility animate-mesh-drift {
+  animation: mesh-drift 100s linear infinite;
+}
+
+/* Subtle vertical drift on large glow layers */
+@keyframes bg-float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -1.4%, 0);
+  }
+}
+
+@utility animate-bg-float-y {
+  animation: bg-float-y 26s ease-in-out infinite;
+}
+
+/* Network boot overlay — packet trace on graph ring */
+@keyframes net-loader-dash {
+  to {
+    stroke-dashoffset: -56;
+  }
+}
+
+@utility animate-net-loader-dash {
+  animation: net-loader-dash 0.9s linear infinite;
+}
+
+@keyframes loader-node {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@utility animate-loader-node {
+  animation: loader-node 0.75s ease-in-out infinite;
+}
+
+/* First paint: backdrop fades in */
+@keyframes backdrop-boot {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility animate-backdrop-boot {
+  animation: backdrop-boot 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Light content reveal after boot (no blur — loader carries the effect). */
+@keyframes portfolio-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@utility animate-portfolio-enter {
+  animation: portfolio-enter 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation-delay: 0.05s;
+}
+
+/* NOC backdrop: slow “console glow” drift (transform-only). */
+@keyframes noc-radial-breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(1.2%, -2%, 0) scale(1.045);
+    opacity: 0.9;
+  }
+}
+
+@keyframes noc-radial-breathe-alt {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-1.8%, 1.4%, 0) scale(1.06);
+  }
+}
+
+@utility animate-noc-radial-a {
+  animation: noc-radial-breathe 28s ease-in-out infinite;
+}
+
+@utility animate-noc-radial-b {
+  animation: noc-radial-breathe-alt 38s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+@utility animate-noc-radial-c {
+  animation: noc-radial-breathe 32s ease-in-out infinite;
+  animation-delay: -14s;
+}
+
+/* Light topology: soft rack-light drift */
+@keyframes light-radial-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(-1.5%, 1.2%, 0) scale(1.05);
+    opacity: 0.92;
+  }
+}
+
+@utility animate-light-radial-a {
+  animation: light-radial-drift 30s ease-in-out infinite;
+}
+
+@utility animate-light-radial-b {
+  animation: light-radial-drift 40s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-portfolio-enter,
+  .animate-backdrop-boot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .animate-net-ripple,
+  .animate-net-ripple-slow,
+  .animate-spectrum-shift,
+  .animate-mesh-drift,
+  .animate-bg-float-y,
+  .animate-net-loader-dash,
+  .animate-loader-node,
+  .animate-noc-radial-a,
+  .animate-noc-radial-b,
+  .animate-noc-radial-c,
+  .animate-light-radial-a,
+  .animate-light-radial-b {
+    animation: none !important;
+  }
+}
+
+@layer components {
+  .grid-border {
+    @apply border-[#e5e5e0];
+  }
+}
