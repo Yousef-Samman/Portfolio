@@ -15,9 +15,6 @@ export function getPortfolioTheme() {
     navInactive: 'text-slate-400 hover:text-slate-200',
     navActive:
       'text-amber-300 underline decoration-amber-400/70 underline-offset-[4px]',
-    statusBadge:
-      'inline-flex items-center gap-2 px-3 py-1 border border-emerald-500/35 rounded-full text-[10px] font-sans uppercase mb-8 text-emerald-300/90 bg-emerald-950/35',
-    statusPing: true,
     headline: 'text-slate-50',
     headlineAccent:
       'text-emerald-400 italic drop-shadow-[0_0_28px_rgb(52_211_153/0.25)]',

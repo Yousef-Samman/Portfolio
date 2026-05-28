@@ -1,55 +1,79 @@
 # Yousef Samman — IT Portfolio
 
-Personal portfolio site built with React, Vite, and Tailwind CSS. Optional Express API for contact, CV download, and other server-side features.
+A modern personal portfolio website built with **React**, **Vite**, **TypeScript**, and **Tailwind CSS**, with an optional **Express API** for contact form handling, CV download, and health checks.
 
-## Prerequisites
+---
 
-- Node.js 20+
+## Overview
 
-## Local development
+This project is a professional IT portfolio for presenting Yousef Samman’s background, experience, education, technical skills, projects, and contact options in one clean web interface.
 
-```bash
-npm install
-```
+The goal of the portfolio is to give recruiters, evaluators, clients, and visitors a quick way to understand the owner’s technical profile and review his work without needing separate documents or links.
 
-**Frontend only** (portfolio UI):
+The frontend provides the public portfolio experience, while the backend API supports server-side features such as contact message handling, CV availability checking, CV download, and API status monitoring.
 
-```bash
-npm run dev
-```
+---
 
-Open http://localhost:3000
+## Features
 
-**Frontend + API** (contact form, CV download):
+- Single-page portfolio website
+- Responsive React frontend
+- Professional hero, experience, projects, education, skills, and contact sections
+- Contact form connected to an Express API
+- CV download and CV status endpoints
+- API health-check endpoint
+- Contact form validation
+- Basic anti-spam protection using honeypot, cooldown, rate limiting, and optional Cloudflare Turnstile
+- Optional email notifications using SMTP or Resend
+- Local contact message storage using JSONL
+- Environment-based configuration through `.env.example`
 
-```bash
-npm run dev:all
-```
+---
 
-Or two terminals: `npm run server` and `npm run dev`.
+## Tech Stack
 
-See **[FEATURES.md](FEATURES.md)** for the full feature list and go-live checklist.
+| Layer | Technology |
+|---|---|
+| Frontend | React 19, TypeScript, Vite |
+| Styling | Tailwind CSS |
+| Backend | Node.js, Express |
+| Runtime | tsx |
+| Storage | Local JSONL file |
+| Email | Nodemailer SMTP or Resend |
+| Bot Protection | Cloudflare Turnstile |
+| Package Manager | npm |
+| Deployment | Not clearly specified in the repository |
 
-API health check: http://localhost:3001/api/health (proxied at http://localhost:3000/api/health)
+---
 
-## Scripts
+## Project Structure
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Vite dev server (port 3000) |
-| `npm run server` | Express API (port 3001) |
-| `npm run build` | Production frontend build → `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | TypeScript check |
-
-## Environment
-
-Copy `.env.example` to `.env.local` and adjust values as needed.
-
-## Production build
-
-```bash
-npm run build
-```
-
-Serve the  dist/` with any static host, or run the API alongside it on a VPS (see deployment notes in project docs / team chat).
+```text
+Portfolio/
+├── docs/
+├── public/
+│   └── cv/
+├── scripts/
+├── server/
+│   ├── index.ts
+│   ├── lib/
+│   ├── middleware/
+│   ├── routes/
+│   └── services/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── config/
+│   ├── data/
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   ├── theme/
+│   ├── types/
+│   ├── utils/
+│   ├── App.tsx
+│   └── main.tsx
+├── .env.example
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
