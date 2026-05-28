@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Yousef Samman — IT Portfolio
 
-# Run and deploy your AI Studio app
+Personal portfolio site built with React, Vite, and Tailwind CSS. Optional Express API for contact, CV download, and other server-side features.
 
-This contains everything you need to run your app locally.
+## Prerequisites
 
-View your app in AI Studio: https://ai.studio/apps/6abe0b0b-4619-4daa-b6eb-82e653215ecb
+- Node.js 20+
 
-## Run Locally
+## Local development
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+```
 
+**Frontend only** (portfolio UI):
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run dev
+```
+
+Open http://localhost:3000
+
+**Frontend + API** (contact form, CV download):
+
+```bash
+npm run dev:all
+```
+
+Or two terminals: `npm run server` and `npm run dev`.
+
+See **[FEATURES.md](FEATURES.md)** for the full feature list and go-live checklist.
+
+API health check: http://localhost:3001/api/health (proxied at http://localhost:3000/api/health)
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Vite dev server (port 3000) |
+| `npm run server` | Express API (port 3001) |
+| `npm run build` | Production frontend build → `dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | TypeScript check |
+
+## Environment
+
+Copy `.env.example` to `.env.local` and adjust values as needed.
+
+## Production build
+
+```bash
+npm run build
+```
+
+Serve the  dist/` with any static host, or run the API alongside it on a VPS (see deployment notes in project docs / team chat).

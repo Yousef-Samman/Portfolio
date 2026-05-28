@@ -1,0 +1,58 @@
+import githubIcon from '../assets/Logos/GhubLogo.jpg';
+import { PROJECTS } from '../data/projects';
+import type { PortfolioTheme } from '../theme/portfolioTheme';
+
+type ProjectsSectionProps = {
+  theme: PortfolioTheme;
+};
+
+export function ProjectsSection({ theme }: ProjectsSectionProps) {
+  return (
+    <section id="projects" className="mb-48">
+      <div className="flex items-center justify-between mb-12">
+        <h3 className={`text-xs font-sans uppercase tracking-[0.3em] font-bold ${theme.sectionLabel}`}>
+          Projects
+        </h3>
+        <span className={`text-[10px] font-sans ${theme.mutedDate}`}>
+          MODULAR IMPLEMENTATIONS (3)
+        </span>
+      </div>
+      <div className={theme.dividerSoft}>
+        {PROJECTS.map((project) => (
+          <a
+            key={project.id}
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={theme.projectRow}
+            aria-label={`${project.title}: view GitHub repository`}
+          >
+            <div
+              className={`col-span-12 md:col-span-1 text-[10px] font-sans self-center ${theme.projectId}`}
+            >
+              /{project.id}
+            </div>
+            <div className="col-span-12 md:col-span-4 mt-4 md:mt-0">
+              <h4 className={theme.projectTitle}>{project.title}</h4>
+              <span className={theme.projectCat}>{project.category}</span>
+            </div>
+            <div className="col-span-12 md:col-span-5 mt-4 md:mt-0">
+              <p className={theme.projectDesc}>{project.description}</p>
+            </div>
+            <div className="col-span-12 md:col-span-2 mt-4 md:mt-0 flex justify-end">
+              <div className={theme.iconCircle}>
+                <img
+                  src={githubIcon}
+                  alt=""
+                  className="h-5 w-5 rounded-sm object-contain opacity-90"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
