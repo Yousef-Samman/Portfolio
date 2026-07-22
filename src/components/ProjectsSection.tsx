@@ -8,8 +8,8 @@ type ProjectsSectionProps = {
 
 export function ProjectsSection({ theme }: ProjectsSectionProps) {
   return (
-    <section id="projects" className="mb-48">
-      <div className="flex items-center justify-between mb-12">
+    <section id="projects" className="mb-24 md:mb-48">
+      <div className="mb-8 flex flex-col gap-2 sm:mb-12 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <h3 className={`text-xs font-sans uppercase tracking-[0.3em] font-bold ${theme.sectionLabel}`}>
           Projects
         </h3>

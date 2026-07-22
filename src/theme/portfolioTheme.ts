@@ -1,6 +1,6 @@
 export function getPortfolioTheme() {
   return {
-    shell: 'min-h-screen bg-[#030508] text-slate-100 font-sans',
+    shell: 'min-h-screen overflow-x-hidden bg-[#030508] text-slate-100 font-sans',
     headerBorder: 'border-b border-slate-700/90',
     name: 'text-slate-50',
     subtitle: 'text-slate-500',
@@ -19,7 +19,7 @@ export function getPortfolioTheme() {
     headlineAccent:
       'text-emerald-400 italic drop-shadow-[0_0_28px_rgb(52_211_153/0.25)]',
     heroPhotoWrap:
-      'relative mb-12 w-full max-w-sm aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-emerald-500/25 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)]',
+      'relative mb-8 w-full max-w-sm aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-emerald-500/25 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] md:mb-12',
     lead: 'text-slate-400',
     cvButton:
       'inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-4 py-2 text-[11px] font-bold uppercase tracking-wide border border-emerald-500/35 text-emerald-300/95 bg-emerald-950/40 shadow-[inset_0_1px_0_0_rgb(52_211_153/0.08)] transition-all hover:bg-emerald-950/65 hover:border-emerald-500/50 hover:shadow-[0_0_14px_rgba(52,211,153,0.2)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/55',
@@ -29,7 +29,7 @@ export function getPortfolioTheme() {
     accentIcon: 'text-amber-400/80',
     mutedDate: 'text-slate-400 font-semibold tabular-nums tracking-tight',
     expCompanyRow:
-      'mt-8 mb-2 flex flex-row items-start justify-between gap-3 sm:gap-4',
+      'mt-8 mb-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4',
     expCompanyTitle:
       'min-w-0 flex-1 text-xl sm:text-2xl font-bold leading-snug tracking-tight text-slate-100 group-hover:text-emerald-300 transition-colors',
     roleMuted: 'text-sm font-sans uppercase tracking-widest mb-6 text-slate-400',
@@ -43,28 +43,28 @@ export function getPortfolioTheme() {
     expTimelineFill:
       'h-full rounded-full bg-gradient-to-r from-emerald-700/85 to-emerald-400 transition-[width] duration-500 ease-out',
     expLogoImg:
-      'mt-2 h-10 sm:h-11 w-auto max-w-[140px] shrink-0 object-contain rounded-md bg-white p-1.5 ring-1 ring-slate-600/75 shadow-sm',
+      'h-10 sm:h-11 w-auto max-w-[140px] shrink-0 object-contain rounded-md bg-white p-1.5 ring-1 ring-slate-600/75 shadow-sm sm:mt-2',
     projectRow:
-      'grid grid-cols-12 py-12 border-b border-slate-700 group cursor-pointer hover:pl-4 transition-colors hover:bg-slate-900/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030508]',
+      'grid grid-cols-12 gap-y-3 py-8 border-b border-slate-700 group cursor-pointer transition-colors max-md:hover:pl-0 md:py-12 md:hover:pl-4 hover:bg-slate-900/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030508]',
     projectId:
       'font-bold tabular-nums tracking-tight text-sm sm:text-base text-emerald-400/95 drop-shadow-[0_0_12px_rgb(52_211_153/0.35)]',
-    projectTitle: 'text-2xl font-bold text-slate-100 group-hover:text-emerald-300 transition-colors',
+    projectTitle: 'text-xl font-bold text-slate-100 group-hover:text-emerald-300 transition-colors sm:text-2xl',
     projectCat: 'text-[10px] font-sans uppercase tracking-widest text-slate-500',
     projectDesc: 'text-sm text-slate-400 leading-relaxed max-w-sm',
     iconCircle:
       'w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center group-hover:bg-emerald-500/15 group-hover:border-emerald-500/50 group-hover:text-emerald-300 transition-all',
     eduCard:
-      'col-span-12 md:col-span-6 p-12 bg-emerald-950/25 text-slate-100 border border-emerald-500/20 rounded-sm shadow-[inset_0_0_0_1px_rgb(52_211_153/0.06)]',
+      'col-span-12 md:col-span-6 p-6 sm:p-8 md:p-12 bg-emerald-950/25 text-slate-100 border border-emerald-500/20 rounded-sm shadow-[inset_0_0_0_1px_rgb(52_211_153/0.06)]',
     eduHeading: 'text-xs font-sans uppercase tracking-widest mb-8 text-emerald-400/70',
-    eduTitle: 'text-3xl font-serif italic mb-4 text-slate-50',
+    eduTitle: 'text-2xl font-serif italic mb-4 text-slate-50 sm:text-3xl',
     eduSub: 'text-sm mb-2 text-slate-400',
     eduGpa:
-      'inline-block px-4 py-2.5 bg-emerald-500/12 border border-emerald-500/30 rounded font-sans text-2xl font-extrabold tabular-nums tracking-tight mb-12 text-emerald-100',
+      'inline-block px-3 py-2 bg-emerald-500/12 border border-emerald-500/30 rounded font-sans text-xl font-extrabold tabular-nums tracking-tight mb-8 text-emerald-100 sm:px-4 sm:py-2.5 sm:text-2xl sm:mb-12',
     eduRow:
-      'flex items-center gap-4 text-xs font-sans uppercase tracking-widest border-b border-emerald-500/15 pb-4 text-slate-300',
+      'flex items-start gap-3 text-[11px] font-sans uppercase tracking-wide border-b border-emerald-500/15 pb-4 text-slate-300 sm:items-center sm:gap-4 sm:text-xs sm:tracking-widest',
     eduChevron: 'text-emerald-400 shrink-0',
     skillsCard:
-      'col-span-12 md:col-span-6 p-12 border border-slate-700 bg-slate-900/50 rounded-sm backdrop-blur-sm',
+      'col-span-12 md:col-span-6 p-6 sm:p-8 md:p-12 border border-slate-700 bg-slate-900/50 rounded-sm backdrop-blur-sm',
     skillsHeading: 'text-xs font-sans uppercase tracking-widest mb-8 text-slate-500',
     skillsColTitle: 'text-[10px] font-bold uppercase mb-4 tracking-widest text-amber-200/70',
     skillsToolList: 'space-y-0',
@@ -103,7 +103,7 @@ export function getPortfolioTheme() {
     contactSubmitDisabled:
       'inline-flex cursor-not-allowed items-center justify-center rounded-lg px-6 py-3 text-[11px] font-bold uppercase tracking-wide border border-slate-600/80 text-slate-500 bg-slate-900/50 opacity-70',
     contactCalloutBox:
-      'mb-10 rounded-sm border border-emerald-500/25 bg-emerald-950/25 px-6 py-5 ring-1 ring-emerald-500/15',
+      'mb-8 rounded-sm border border-emerald-500/25 bg-emerald-950/25 px-4 py-4 ring-1 ring-emerald-500/15 sm:mb-10 sm:px-6 sm:py-5',
     contactCalloutText: 'text-sm leading-relaxed text-emerald-100/95',
     contactSuccess: 'text-sm text-emerald-300/90',
     contactError: 'text-sm text-amber-300/90',

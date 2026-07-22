@@ -17,15 +17,17 @@ export function PortfolioHeader({ theme, activeSection }: PortfolioHeaderProps) 
 
   return (
     <header
-      className={`flex flex-row flex-nowrap items-start justify-between gap-4 pb-12 mb-24 ${theme.headerBorder}`}
+      className={`flex flex-col gap-8 pb-10 mb-16 sm:gap-10 sm:pb-12 sm:mb-20 lg:mb-24 lg:flex-row lg:items-start lg:justify-between lg:gap-6 ${theme.headerBorder}`}
     >
-      <div className="min-w-0 flex-1 pr-2">
+      <div className="min-w-0 w-full lg:flex-1 lg:pr-2">
         <h1
-          className={`text-2xl font-bold tracking-tighter uppercase mb-2 sm:text-3xl md:text-4xl ${theme.name}`}
+          className={`text-xl font-bold tracking-tighter uppercase mb-2 text-balance sm:text-2xl md:text-3xl lg:text-4xl ${theme.name}`}
         >
           {`${CONTACT_INFO.name} Portfolio`}
         </h1>
-        <p className={`text-xs font-sans tracking-widest uppercase ${theme.subtitle}`}>
+        <p
+          className={`text-[10px] font-sans tracking-wide uppercase text-pretty sm:text-xs sm:tracking-widest ${theme.subtitle}`}
+        >
           {CONTACT_INFO.credentialsLine}
         </p>
         <div className="mt-5 grid w-full max-w-[9rem] grid-cols-2 gap-x-2 sm:gap-x-3">
@@ -60,7 +62,7 @@ export function PortfolioHeader({ theme, activeSection }: PortfolioHeaderProps) 
             </a>
           </div>
         </div>
-        <p className={`mt-4 ${theme.headerSocialLabel}`}>
+        <p className={`mt-4 text-pretty ${theme.headerSocialLabel}`}>
           <span>{CONTACT_INFO.location}</span>
           <span className="opacity-50" aria-hidden>
             {' '}
@@ -72,21 +74,22 @@ export function PortfolioHeader({ theme, activeSection }: PortfolioHeaderProps) 
         </p>
       </div>
       <nav
-        className="mt-0.5 flex shrink-0 flex-nowrap items-center justify-end gap-x-3 overflow-x-auto overflow-y-visible [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-x-4 md:gap-x-5 md:pl-2 [&::-webkit-scrollbar]:hidden font-sans text-[10px] sm:text-[11px] md:text-[0.6875rem] font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em] md:tracking-[0.2em]"
+        className="flex w-full min-w-0 flex-wrap items-center gap-x-3 gap-y-2 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] sm:gap-x-4 sm:text-[11px] sm:tracking-[0.16em] lg:mt-0.5 lg:w-auto lg:max-w-[min(100%,28rem)] lg:shrink-0 lg:justify-end lg:gap-x-3 lg:tracking-[0.14em] xl:max-w-none xl:gap-x-5 xl:tracking-[0.2em]"
+        aria-label="Page sections"
       >
-        <a href="#about" className={`${navHrefClass('about')} shrink-0 whitespace-nowrap`}>
+        <a href="#about" className={`${navHrefClass('about')} shrink-0`}>
           Info
         </a>
-        <a href="#experience" className={`${navHrefClass('experience')} shrink-0 whitespace-nowrap`}>
+        <a href="#experience" className={`${navHrefClass('experience')} shrink-0`}>
           Timeline
         </a>
-        <a href="#projects" className={`${navHrefClass('projects')} shrink-0 whitespace-nowrap`}>
+        <a href="#projects" className={`${navHrefClass('projects')} shrink-0`}>
           Projects
         </a>
-        <a href="#skills" className={`${navHrefClass('skills')} shrink-0 whitespace-nowrap`}>
+        <a href="#skills" className={`${navHrefClass('skills')} shrink-0`}>
           Education & Tools
         </a>
-        <a href="#contact" className={`${navHrefClass('contact')} shrink-0 whitespace-nowrap`}>
+        <a href="#contact" className={`${navHrefClass('contact')} shrink-0`}>
           Get in Touch
         </a>
       </nav>

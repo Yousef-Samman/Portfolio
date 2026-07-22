@@ -42,7 +42,7 @@ The frontend provides the public portfolio experience, while the backend API sup
 | Email | Nodemailer SMTP or Resend |
 | Bot Protection | Cloudflare Turnstile |
 | Package Manager | npm |
-| Deployment | Not clearly specified in the repository |
+| Deployment | Vercel (frontend) + Render (API) — see [docs/GOING-LIVE.md](docs/GOING-LIVE.md) |
 
 ---
 
@@ -77,3 +77,12 @@ Portfolio/
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
+```
+
+---
+
+## Going live
+
+Follow the step-by-step checklist: **[docs/GOING-LIVE.md](docs/GOING-LIVE.md)**
+
+Summary: push to GitHub → deploy API on **Render** → deploy site on **Vercel** → set `VITE_API_URL` → update Turnstile domains → test.

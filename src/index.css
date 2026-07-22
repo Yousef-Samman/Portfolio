@@ -20,10 +20,12 @@
 
   html.portfolio-noc {
     background-color: #030508;
+    overflow-x: hidden;
   }
 
   html.portfolio-noc body {
     @apply text-slate-100 antialiased;
+    overflow-x: hidden;
   }
 }
 

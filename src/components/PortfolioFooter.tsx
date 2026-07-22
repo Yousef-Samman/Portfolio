@@ -6,7 +6,7 @@ type PortfolioFooterProps = {
 
 export function PortfolioFooter({ theme }: PortfolioFooterProps) {
   return (
-    <footer className="max-w-[1440px] mx-auto px-12 pb-12 grid grid-cols-12">
+    <footer className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pb-8 md:pb-12 grid grid-cols-12">
       <div
         className={`col-span-12 flex justify-end text-[10px] font-sans uppercase tracking-[0.3em] ${theme.footerLabel}`}
       >

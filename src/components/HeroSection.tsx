@@ -11,7 +11,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ theme, cvAvailable }: HeroSectionProps) {
   return (
-    <section id="about" className="mb-48 grid grid-cols-12 gap-y-8">
+    <section id="about" className="mb-24 md:mb-48 grid grid-cols-12 gap-y-8">
       <div className="col-span-12 flex flex-col md:flex-row md:items-center gap-x-10 md:gap-x-12 lg:gap-x-16 gap-y-8">
         <div className="mx-auto w-full max-w-sm shrink-0 md:mx-0">
           <div className={`${theme.heroPhotoWrap} md:mb-0`}>

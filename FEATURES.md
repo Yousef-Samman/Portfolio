@@ -13,6 +13,8 @@
 
 ## Before go-live checklist
 
+**Full deployment guide:** [docs/GOING-LIVE.md](docs/GOING-LIVE.md) (Vercel frontend + Render API)
+
 ### Privacy & contact (do not skip)
 
 1. **No personal email or phone on the public site** — they should not appear in `App.tsx`, the header, or the Contact section. Visitors reach you via the **contact form** and **GitHub / LinkedIn** only.

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { submitContact } from '../lib/api';
+import { apiPath, submitContact } from '../lib/api';
 import {
   getTurnstileSiteKey,
   isAlwaysPassTurnstileTestKey,
@@ -43,7 +43,7 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
   const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
-    fetch('/api/health')
+    fetch(apiPath('/api/health'))
       .then((res) => res.json())
       .then((data: { turnstile?: boolean }) => setServerCaptchaOn(Boolean(data.turnstile)))
       .catch(() => setServerCaptchaOn(null));
@@ -159,7 +159,7 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
   const submitDisabled = busy || waitingForCaptcha;
 
   return (
-    <section id="contact" className="mb-48 pt-12 border-t border-slate-600">
+    <section id="contact" className="mb-24 md:mb-48 pt-8 md:pt-12 border-t border-slate-600">
       <h3
         className={`text-xs font-sans uppercase tracking-[0.3em] font-bold mb-10 ${theme.sectionLabel}`}
       >
@@ -173,7 +173,7 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
       </div>
 
       <form
-        className={`${theme.contactCard} p-8 md:p-10 space-y-5`}
+        className={`${theme.contactCard} p-5 sm:p-8 md:p-10 space-y-5`}
         onSubmit={onSubmit}
         noValidate
       >

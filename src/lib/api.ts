@@ -11,10 +11,19 @@ export type ApiResult<T> =
   | { ok: true; data: T }
   | { ok: false; error: string; status?: number };
 
-export const CV_DOWNLOAD_URL = '/api/cv';
+function apiBase(): string {
+  const base = import.meta.env.VITE_API_URL?.trim().replace(/\/$/, '') ?? '';
+  return base;
+}
+
+export function apiPath(path: string): string {
+  return `${apiBase()}${path}`;
+}
+
+export const CV_DOWNLOAD_URL = apiPath('/api/cv');
 
 export async function fetchCvStatus(): Promise<{ available: boolean; filename: string }> {
-  const res = await fetch('/api/cv/status');
+  const res = await fetch(apiPath('/api/cv/status'));
   if (!res.ok) return { available: false, filename: 'YousefCv.pdf' };
   const json = (await res.json()) as { available?: boolean; filename?: string };
   return {
@@ -26,7 +35,7 @@ export async function fetchCvStatus(): Promise<{ available: boolean; filename: s
 export async function submitContact(
   payload: ContactFormData,
 ): Promise<ApiResult<{ message: string }>> {
-  const res = await fetch('/api/contact', {
+  const res = await fetch(apiPath('/api/contact'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

@@ -13,14 +13,14 @@ type ExperienceSectionProps = {
 
 export function ExperienceSection({ theme }: ExperienceSectionProps) {
   return (
-    <section id="experience" className={`mb-48 pt-12 ${theme.divider}`}>
+    <section id="experience" className={`mb-24 md:mb-48 pt-8 md:pt-12 ${theme.divider}`}>
       <h3
         className={`text-xs font-sans uppercase tracking-[0.3em] font-bold mb-10 ${theme.sectionLabel}`}
       >
         Experience Timeline
       </h3>
 
-      <div className="mb-10 rounded-sm border border-emerald-500/25 bg-emerald-950/25 px-6 py-5 ring-1 ring-emerald-500/15">
+      <div className="mb-8 rounded-sm border border-emerald-500/25 bg-emerald-950/25 px-4 py-4 ring-1 ring-emerald-500/15 sm:mb-10 sm:px-6 sm:py-5">
         <p className={`text-[10px] font-sans font-bold uppercase tracking-[0.28em] ${theme.heroQuoteLabel}`}>
           Cumulative tenure (all roles)
         </p>
@@ -34,10 +34,10 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
 
       <div className="relative">
         <div
-          className="pointer-events-none absolute left-6 top-6 bottom-6 w-px -translate-x-1/2 bg-gradient-to-b from-amber-400/60 via-emerald-400/45 to-emerald-500/25"
+          className="pointer-events-none absolute left-4 top-6 bottom-6 w-px -translate-x-1/2 bg-gradient-to-b from-amber-400/60 via-emerald-400/45 to-emerald-500/25 sm:left-6"
           aria-hidden
         />
-        <ul className="m-0 list-none space-y-10 p-0 md:space-y-12">
+        <ul className="m-0 list-none space-y-8 p-0 sm:space-y-10 md:space-y-12">
           {EXPERIENCE_FOR_TIMELINE.map((entry) => {
             const barPct = Math.round(
               (entry.tenureMonthsRounded / MAX_TENURE_MONTHS) * 100,
@@ -46,14 +46,14 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
             const rowKey = `${entry.startISO}-${entry.role}-${entry.company}`;
 
             return (
-              <li key={rowKey} className="flex items-start gap-5 md:gap-8">
-                <div className="relative z-[1] flex w-12 shrink-0 justify-center pt-[18px] md:w-12">
+              <li key={rowKey} className="flex items-start gap-3 sm:gap-5 md:gap-8">
+                <div className="relative z-[1] flex w-8 shrink-0 justify-center pt-[18px] sm:w-12">
                   <span
                     className="box-border h-3 w-3 shrink-0 rounded-full border-2 border-emerald-400 bg-[#030508] shadow-[0_0_14px_rgba(52,211,153,0.4)]"
                     aria-hidden
                   />
                 </div>
-                <div className="grid min-w-0 flex-1 grid-cols-1 gap-6 border border-slate-700/90 bg-slate-900/90 p-6 transition-colors hover:bg-slate-800/95 group md:grid-cols-[11rem_1fr] md:gap-10 md:p-10 backdrop-blur-sm">
+                <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 border border-slate-700/90 bg-slate-900/90 p-4 transition-colors hover:bg-slate-800/95 group sm:gap-6 sm:p-6 md:grid-cols-[11rem_1fr] md:gap-10 md:p-10 backdrop-blur-sm">
                   <aside className="flex flex-col gap-1 border-b border-slate-700/50 pb-4 md:border-b-0 md:pb-0">
                     <p className={`text-[10px] font-sans uppercase tracking-widest ${theme.mutedDate}`}>
                       Date range

@@ -10,13 +10,13 @@ type EducationSkillsSectionProps = {
 
 export function EducationSkillsSection({ theme }: EducationSkillsSectionProps) {
   return (
-    <section id="skills" className="mb-48">
-      <div className="flex items-center justify-between mb-12">
+    <section id="skills" className="mb-24 md:mb-48">
+      <div className="flex items-center justify-between mb-8 sm:mb-12">
         <h3 className={`text-xs font-sans uppercase tracking-[0.3em] font-bold ${theme.sectionLabel}`}>
           Education & Tools
         </h3>
       </div>
-      <div className="grid grid-cols-12 gap-12">
+      <div className="grid grid-cols-12 gap-6 md:gap-12">
         <div className={theme.eduCard}>
           <h3 className={theme.eduHeading}>Education</h3>
           <h4 className={theme.eduTitle}>B.Sc. Information Technology</h4>

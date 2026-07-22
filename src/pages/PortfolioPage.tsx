@@ -28,7 +28,7 @@ export function PortfolioPage() {
       </div>
 
       <div className="relative z-10">
-        <main className="max-w-[1440px] mx-auto px-12 md:px-24 pt-24 pb-48">
+        <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-16 sm:pt-20 md:pt-24 pb-24 md:pb-48">
           <PortfolioHeader theme={theme} activeSection={activeSection} />
           <HeroSection theme={theme} cvAvailable={cvAvailable} />
           <ExperienceSection theme={theme} />
