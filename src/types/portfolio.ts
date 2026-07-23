@@ -11,7 +11,8 @@ export type ProjectItem = {
   description: string;
   tools: string[];
   outcome: string;
-  repoUrl: string;
+  /** Omit or leave empty when the repo is private / not published yet. */
+  repoUrl?: string;
 };
 
 export type ExperienceEntry = {

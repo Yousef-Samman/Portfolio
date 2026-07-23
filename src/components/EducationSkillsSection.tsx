@@ -1,5 +1,5 @@
 import { ChevronRight } from 'lucide-react';
-import { EDUCATION_CERTIFICATES } from '../data/content';
+import { EDUCATION_CERTIFICATES, EDUCATION_GPA } from '../data/content';
 import { TECH_STACK_ITEMS, TECH_TOOL_ITEMS } from '../data/skills';
 import type { PortfolioTheme } from '../theme/portfolioTheme';
 import { SkillList } from './SkillList';
@@ -21,7 +21,7 @@ export function EducationSkillsSection({ theme }: EducationSkillsSectionProps) {
           <h3 className={theme.eduHeading}>Education</h3>
           <h4 className={theme.eduTitle}>B.Sc. Information Technology</h4>
           <p className={theme.eduSub}>King Abdulaziz University, Jeddah</p>
-          <div className={theme.eduGpa}>GPA: 4.85 / 5.0</div>
+          <div className={theme.eduGpa}>GPA: {EDUCATION_GPA}</div>
           <div className="space-y-4">
             {EDUCATION_CERTIFICATES.map((certificate) => (
               <div key={certificate} className={theme.eduRow}>

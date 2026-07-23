@@ -18,42 +18,49 @@
     @apply text-[#1a1a1a] antialiased;
   }
 
-  html.portfolio-noc {
+  html.portfolio-ai {
     background-color: #030508;
     overflow-x: hidden;
   }
 
-  html.portfolio-noc body {
+  html.portfolio-ai body {
     @apply text-slate-100 antialiased;
     overflow-x: hidden;
   }
 }
 
-/* RF / “cell site” ripple — modern wireless metaphor */
-@keyframes net-ripple {
-  0% {
-    transform: scale(0.3);
-    opacity: 0.48;
-  }
-  55% {
-    opacity: 0.12;
-  }
+/* Soft node activation pulse on the neural graph */
+@keyframes node-activation {
+  0%,
   100% {
-    transform: scale(1.08);
-    opacity: 0;
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.9;
   }
 }
 
-@utility animate-net-ripple {
-  animation: net-ripple 9s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+@utility animate-node-activation {
+  animation: node-activation 4.8s ease-in-out infinite;
 }
 
-@utility animate-net-ripple-slow {
-  animation: net-ripple 12.5s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+/* Synapse line shimmer */
+@keyframes synapse-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
 
-/* Spectrum bar drift (DWDM / optical lane feel) */
-@keyframes spectrum-shift {
+@utility animate-synapse-pulse {
+  animation: synapse-pulse 7.5s ease-in-out infinite;
+}
+
+/* Latent-field blob drift */
+@keyframes latent-drift {
   0% {
     transform: translate3d(-18%, 0, 0) rotate(-14deg);
     opacity: 0.35;
@@ -64,21 +71,21 @@
   }
 }
 
-@utility animate-spectrum-shift {
-  animation: spectrum-shift 22s ease-in-out infinite alternate;
+@utility animate-latent-drift {
+  animation: latent-drift 22s ease-in-out infinite alternate;
 }
 
-/* Diamond / isometric weave — slow drift */
-@keyframes mesh-drift {
+/* Fine grid drift */
+@keyframes grid-drift {
   to {
     background-position:
-      140px 0,
-      210px 70px;
+      64px 0,
+      0 64px;
   }
 }
 
-@utility animate-mesh-drift {
-  animation: mesh-drift 100s linear infinite;
+@utility animate-grid-drift {
+  animation: grid-drift 100s linear infinite;
 }
 
 /* Subtle vertical drift on large glow layers */
@@ -96,15 +103,15 @@
   animation: bg-float-y 26s ease-in-out infinite;
 }
 
-/* Network boot overlay — packet trace on graph ring */
-@keyframes net-loader-dash {
+/* Model boot overlay — weight-loading dash */
+@keyframes model-loader-dash {
   to {
     stroke-dashoffset: -56;
   }
 }
 
-@utility animate-net-loader-dash {
-  animation: net-loader-dash 0.9s linear infinite;
+@utility animate-model-loader-dash {
+  animation: model-loader-dash 0.9s linear infinite;
 }
 
 @keyframes loader-node {
@@ -152,8 +159,8 @@
   animation-delay: 0.05s;
 }
 
-/* NOC backdrop: slow “console glow” drift (transform-only). */
-@keyframes noc-radial-breathe {
+/* AI backdrop: slow latent-field glow drift (transform-only). */
+@keyframes ai-radial-breathe {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -165,7 +172,7 @@
   }
 }
 
-@keyframes noc-radial-breathe-alt {
+@keyframes ai-radial-breathe-alt {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -175,55 +182,18 @@
   }
 }
 
-@utility animate-noc-radial-a {
-  animation: noc-radial-breathe 28s ease-in-out infinite;
+@utility animate-ai-radial-a {
+  animation: ai-radial-breathe 28s ease-in-out infinite;
 }
 
-@utility animate-noc-radial-b {
-  animation: noc-radial-breathe-alt 38s ease-in-out infinite;
+@utility animate-ai-radial-b {
+  animation: ai-radial-breathe-alt 38s ease-in-out infinite;
   animation-delay: -6s;
 }
 
-@utility animate-noc-radial-c {
-  animation: noc-radial-breathe 32s ease-in-out infinite;
+@utility animate-ai-radial-c {
+  animation: ai-radial-breathe 32s ease-in-out infinite;
   animation-delay: -14s;
-}
-
-/* Light topology: soft rack-light drift */
-@keyframes light-radial-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate3d(-1.5%, 1.2%, 0) scale(1.05);
-    opacity: 0.92;
-  }
-}
-
-@utility animate-light-radial-a {
-  animation: light-radial-drift 30s ease-in-out infinite;
-}
-
-@utility animate-light-radial-b {
-  animation: light-radial-drift 40s ease-in-out infinite;
-  animation-delay: -8s;
-}
-
-/* Topology graph overlay — soft “live network” shimmer */
-@keyframes topology-pulse {
-  0%,
-  100% {
-    opacity: 0.72;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@utility animate-topology-pulse {
-  animation: topology-pulse 10s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -235,19 +205,16 @@
     filter: none !important;
   }
 
-  .animate-net-ripple,
-  .animate-net-ripple-slow,
-  .animate-spectrum-shift,
-  .animate-mesh-drift,
+  .animate-node-activation,
+  .animate-synapse-pulse,
+  .animate-latent-drift,
+  .animate-grid-drift,
   .animate-bg-float-y,
-  .animate-net-loader-dash,
+  .animate-model-loader-dash,
   .animate-loader-node,
-  .animate-noc-radial-a,
-  .animate-noc-radial-b,
-  .animate-noc-radial-c,
-  .animate-light-radial-a,
-  .animate-light-radial-b,
-  .animate-topology-pulse {
+  .animate-ai-radial-a,
+  .animate-ai-radial-b,
+  .animate-ai-radial-c {
     animation: none !important;
   }
 }

@@ -2,15 +2,15 @@ import { ContactSection } from '../components/ContactSection';
 import { EducationSkillsSection } from '../components/EducationSkillsSection';
 import { ExperienceSection } from '../components/ExperienceSection';
 import { HeroSection } from '../components/HeroSection';
-import { NetworkBootOverlay } from '../components/NetworkBootOverlay';
-import { NocBackdrop } from '../components/NocBackdrop';
+import { AiBackdrop } from '../components/AiBackdrop';
+import { ModelBootOverlay } from '../components/ModelBootOverlay';
 import { PortfolioFooter } from '../components/PortfolioFooter';
 import { PortfolioHeader } from '../components/PortfolioHeader';
 import { ProjectsSection } from '../components/ProjectsSection';
 import { useActiveNavSection } from '../hooks/useActiveNavSection';
 import { useBootOverlay } from '../hooks/useBootOverlay';
 import { useCvAvailability } from '../hooks/useCvAvailability';
-import { usePortfolioNocClass } from '../hooks/usePortfolioNocClass';
+import { usePortfolioAiClass } from '../hooks/usePortfolioAiClass';
 import { getPortfolioTheme } from '../theme/portfolioTheme';
 
 export function PortfolioPage() {
@@ -19,12 +19,12 @@ export function PortfolioPage() {
   const cvAvailable = useCvAvailability();
   const { bootCover, bootFadeOut } = useBootOverlay();
 
-  usePortfolioNocClass();
+  usePortfolioAiClass();
 
   return (
     <div className={theme.shell}>
       <div className="fixed inset-0 z-0 overflow-hidden motion-safe:animate-backdrop-boot motion-reduce:opacity-100">
-        <NocBackdrop />
+        <AiBackdrop />
       </div>
 
       <div className="relative z-10">
@@ -54,7 +54,7 @@ export function PortfolioPage() {
         <PortfolioFooter theme={theme} />
       </div>
 
-      {bootCover ? <NetworkBootOverlay fadeOut={bootFadeOut} /> : null}
+      {bootCover ? <ModelBootOverlay fadeOut={bootFadeOut} /> : null}
     </div>
   );
 }

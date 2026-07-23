@@ -17,24 +17,24 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
       <h3
         className={`text-xs font-sans uppercase tracking-[0.3em] font-bold mb-10 ${theme.sectionLabel}`}
       >
-        Experience Timeline
+        Experience
       </h3>
 
-      <div className="mb-8 rounded-sm border border-emerald-500/25 bg-emerald-950/25 px-4 py-4 ring-1 ring-emerald-500/15 sm:mb-10 sm:px-6 sm:py-5">
+      <div className="mb-8 rounded-sm border border-cyan-500/25 bg-cyan-950/25 px-4 py-4 ring-1 ring-cyan-500/15 sm:mb-10 sm:px-6 sm:py-5">
         <p className={`text-[10px] font-sans font-bold uppercase tracking-[0.28em] ${theme.heroQuoteLabel}`}>
-          Cumulative tenure (all roles)
+          Total experience (all roles)
         </p>
-        <p className="mt-2 font-sans text-2xl font-extrabold tabular-nums tracking-tight text-emerald-100">
+        <p className="mt-2 font-sans text-2xl font-extrabold tabular-nums tracking-tight text-cyan-100">
           {TOTAL_TENURE_LABEL}
         </p>
         <p className={`mt-2 text-xs ${theme.mutedDate}`}>
-          Career line · {formatMonthYear(CAREER_START_ISO)} → Present
+          From {formatMonthYear(CAREER_START_ISO)} → Present
         </p>
       </div>
 
       <div className="relative">
         <div
-          className="pointer-events-none absolute left-4 top-6 bottom-6 w-px -translate-x-1/2 bg-gradient-to-b from-amber-400/60 via-emerald-400/45 to-emerald-500/25 sm:left-6"
+          className="pointer-events-none absolute left-4 top-6 bottom-6 w-px -translate-x-1/2 bg-gradient-to-b from-sky-400/55 via-cyan-400/40 to-cyan-500/20 sm:left-6"
           aria-hidden
         />
         <ul className="m-0 list-none space-y-8 p-0 sm:space-y-10 md:space-y-12">
@@ -49,7 +49,7 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
               <li key={rowKey} className="flex items-start gap-3 sm:gap-5 md:gap-8">
                 <div className="relative z-[1] flex w-8 shrink-0 justify-center pt-[18px] sm:w-12">
                   <span
-                    className="box-border h-3 w-3 shrink-0 rounded-full border-2 border-emerald-400 bg-[#030508] shadow-[0_0_14px_rgba(52,211,153,0.4)]"
+                    className="box-border h-3 w-3 shrink-0 rounded-full border-2 border-cyan-400 bg-[#030508] shadow-[0_0_14px_rgba(34,211,238,0.4)]"
                     aria-hidden
                   />
                 </div>

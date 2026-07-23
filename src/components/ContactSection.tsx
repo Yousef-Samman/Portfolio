@@ -302,16 +302,16 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
 
         {!captchaRequired && import.meta.env.DEV ? (
           <p className="text-xs text-amber-300/90" role="alert">
-            Security check is off: add <code className="text-emerald-400/80">VITE_TURNSTILE_SITE_KEY</code>{' '}
-            to <code className="text-emerald-400/80">.env.local</code> and restart{' '}
-            <code className="text-emerald-400/80">npm run dev:all</code>.
+            Security check is off: add <code className="text-cyan-400/80">VITE_TURNSTILE_SITE_KEY</code>{' '}
+            to <code className="text-cyan-400/80">.env.local</code> and restart{' '}
+            <code className="text-cyan-400/80">npm run dev:all</code>.
           </p>
         ) : null}
 
         {captchaMisconfigured ? (
           <p className="text-xs text-amber-300/90" role="alert">
             API expects CAPTCHA but the site key is missing in the browser. Restart{' '}
-            <code className="text-emerald-400/80">npm run dev:all</code>.
+            <code className="text-cyan-400/80">npm run dev:all</code>.
           </p>
         ) : null}
 

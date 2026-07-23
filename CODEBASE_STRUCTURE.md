@@ -23,7 +23,7 @@ yousef-samman-portfolio/
 │   ├── data/               # Static portfolio content
 │   ├── hooks/              # Reusable React logic
 │   ├── lib/                # Frontend API client & analytics
-│   ├── theme/              # Tailwind class tokens (NOC dark theme)
+│   ├── theme/              # Tailwind class tokens (AI dark theme)
 │   ├── config/             # App constants (nav section IDs)
 │   ├── types/              # Shared TypeScript types
 │   └── utils/              # Pure helpers (tenure formatting)
@@ -46,18 +46,18 @@ yousef-samman-portfolio/
 | `components/EducationSkillsSection.tsx` | Education card + tech toolkit |
 | `components/ContactSection.tsx` | Contact form UI + submit state |
 | `components/SkillList.tsx` | Stack/tools rows with icons |
-| `components/NocBackdrop.tsx` | Animated network operations background |
-| `components/NetworkBootOverlay.tsx` | First-load boot animation |
+| `components/AiBackdrop.tsx` | Animated neural-graph / latent-field background |
+| `components/ModelBootOverlay.tsx` | First-load model boot animation |
 | `components/PortfolioFooter.tsx` | Copyright line |
 | `data/content.ts` | Name, location, hero copy, certificates |
 | `data/experience.ts` | Roles + computed tenure |
 | `data/projects.ts` | Project cards |
 | `data/skills.ts` | Tech stack/tool icons |
-| `data/nocBackdrop.ts` | RF ripple site positions |
+| `data/aiBackdrop.ts` | Neural graph node positions + edges |
 | `hooks/useActiveNavSection.ts` | Scroll-spy for nav highlight |
 | `hooks/useBootOverlay.ts` | Boot overlay timing |
 | `hooks/useCvAvailability.ts` | Fetches `/api/cv/status` |
-| `hooks/usePortfolioNocClass.ts` | Adds `portfolio-noc` on `<html>` |
+| `hooks/usePortfolioAiClass.ts` | Adds `portfolio-ai` on `<html>` |
 | `lib/api.ts` | `submitContact`, `fetchCvStatus`, CV URL |
 | `lib/analytics.ts` | Optional Plausible loader |
 | `theme/portfolioTheme.ts` | Centralized Tailwind class strings |
@@ -65,7 +65,7 @@ yousef-samman-portfolio/
 ### Main frontend flow
 
 1. `main.tsx` mounts `App` → `PortfolioPage`.
-2. `PortfolioPage` loads theme, runs hooks (nav, CV, boot, NOC class).
+2. `PortfolioPage` loads theme, runs hooks (nav, CV, boot, AI class).
 3. User scrolls sections (`#about`, `#experience`, …); nav updates via `useActiveNavSection`.
 4. **Contact:** `ContactSection` calls `submitContact()` in `lib/api.ts` → `POST /api/contact` (proxied to port 3001 in dev).
 5. **CV:** Hero link uses `/api/cv`; availability from `GET /api/cv/status`.
@@ -177,7 +177,7 @@ npm run lint
 
 ## Explaining the project in a demo
 
-1. **Single-page portfolio** — dark NOC-themed UI; sections map to nav: Info, Timeline, Projects, Education & Tools, Get in Touch.
+1. **Single-page portfolio** — dark AI-themed UI; sections map to nav: Info, Experience, Projects, Education & Tools, Get in Touch.
 2. **Content lives in `src/data/`** — easy to update copy, roles, and projects without touching layout code.
 3. **UI is split by section** — each file in `src/components/` is one screen area; `PortfolioPage` wires them together.
 4. **Small API** — contact form with validation, rate limits, local JSONL backup, and optional email to your private inbox (credentials only in `.env.local`).

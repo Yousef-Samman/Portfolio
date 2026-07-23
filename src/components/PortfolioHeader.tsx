@@ -81,7 +81,7 @@ export function PortfolioHeader({ theme, activeSection }: PortfolioHeaderProps) 
           Info
         </a>
         <a href="#experience" className={`${navHrefClass('experience')} shrink-0`}>
-          Timeline
+          Experience
         </a>
         <a href="#projects" className={`${navHrefClass('projects')} shrink-0`}>
           Projects
