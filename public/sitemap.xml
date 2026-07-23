@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Before go-live: replace YOUR_DOMAIN_HERE with your live site origin (no path), e.g. https://yousef-portfolio.vercel.app -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://YOUR_DOMAIN_HERE/</loc>

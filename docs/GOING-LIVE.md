@@ -154,15 +154,15 @@ Save. No code change needed if keys are already in env vars.
 
 ## Step 5 — Update site files for production URL
 
-After you know your final public URL:
+After you know your final public URL (Vercel or custom domain), replace **every** `YOUR_DOMAIN_HERE` in:
 
-1. **`public/sitemap.xml`** — replace `https://YOUR_DOMAIN_HERE/` with your live URL
+1. **`public/sitemap.xml`** — `<loc>https://YOUR_DOMAIN_HERE/</loc>`
+2. **`index.html`** — `og:url`, `og:image`, `twitter:image`
+3. **`public/robots.txt`** (optional) — absolute `Sitemap:` line
 
-2. **`index.html`** (when you have an OG image):
-   - Add `og:url` and `og:image` meta tags
-   - See `FEATURES.md` go-live checklist
+`public/og-image.png` is already in the repo; you only need the correct absolute domain in those meta tags.
 
-3. Redeploy Vercel (push to GitHub or **Redeploy** in dashboard)
+Then redeploy Vercel (push to GitHub or **Redeploy** in dashboard).
 
 ---
 
@@ -257,7 +257,7 @@ Render dashboard → your service → **Logs** → look for `[contact]` lines.
 
 ## Later (not required for first go-live)
 
-- [ ] **OG share image** (`public/og-image.png` 1200×630) — see `FEATURES.md`
+- [ ] Refine **OG share image** if you want a custom photo/brand treatment
 - [ ] **Admin inbox** — `docs/CONTACT-EMAIL-AND-ADMIN.md`
 - [ ] Upgrade Render to paid for always-on API
 - [ ] Custom domain + professional email

@@ -8,8 +8,10 @@
 | **CV download** | `GET /api/cv` — serves `public/cv/YousefCv.pdf` when present. |
 | **CV status** | `GET /api/cv/status` — UI checks before showing the download button. |
 | **Health** | `GET /api/health` — uptime checks when you deploy. |
-| **SEO** | Meta description, Open Graph, Twitter card, `robots.txt`, `sitemap.xml` (add `og-image` + domain before go-live). |
+| **SEO** | Meta description, Open Graph (`og:url` / `og:image`), Twitter card, `robots.txt`, `sitemap.xml`. Replace `YOUR_DOMAIN_HERE` before go-live. |
+| **Social preview** | `public/og-image.png` (1200×630-style) — wired in `index.html`. |
 | **Favicon** | `public/favicon.svg` |
+| **Theme** | Dark AI portfolio theme (`AiBackdrop`, `ModelBootOverlay`, `portfolio-ai`). |
 
 ## Before go-live checklist
 
@@ -17,7 +19,7 @@
 
 ### Privacy & contact (do not skip)
 
-1. **No personal email or phone on the public site** — they should not appear in `App.tsx`, the header, or the Contact section. Visitors reach you via the **contact form** and **GitHub / LinkedIn** only.
+1. **No personal email or phone on the public site** — they should not appear in React components. Visitors reach you via the **contact form** and **GitHub / LinkedIn** only.
 2. **Private inbox stays server-side** — put your real email in **`.env.local` only** (never in React code or git):
    ```env
    CONTACT_NOTIFY_EMAIL=your-private-email@example.com
@@ -28,10 +30,10 @@
 ### Site & deploy
 
 4. Ensure **`public/cv/YousefCv.pdf`** is present and is the version you want public
-5. Replace **`https://YOUR_DOMAIN_HERE/`** in `public/sitemap.xml`
-6. Set **`.env.local`**: `APP_URL`, `CONTACT_NOTIFY_EMAIL`, and `CORS_ORIGIN` (production domain) as needed
-7. Add **`public/og-image.png`** (1200×630) and `og:image` in `index.html` — do when ready (use your own design or photo)
-8. Optional analytics: set `VITE_PLAUSIBLE_DOMAIN` in `.env.local`
+5. Replace **`https://YOUR_DOMAIN_HERE/`** in `public/sitemap.xml`, `index.html` (`og:url` / `og:image` / `twitter:image`), and optionally `public/robots.txt`
+6. Set **`.env.local`**: `APP_URL`, `CONTACT_NOTIFY_EMAIL`, Turnstile + SMTP as needed
+7. On Vercel set `VITE_API_URL` + `VITE_TURNSTILE_SITE_KEY`; on Render set API secrets + `CORS_ORIGIN`
+8. Optional analytics: set `VITE_PLAUSIBLE_DOMAIN` in `.env.local` / Vercel
 
 ## Planned features (detailed specs)
 

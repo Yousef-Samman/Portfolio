@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# Before go-live: prefer an absolute sitemap URL, e.g. https://YOUR_DOMAIN_HERE/sitemap.xml
 Sitemap: /sitemap.xml
