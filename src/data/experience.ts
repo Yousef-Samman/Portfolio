@@ -1,4 +1,4 @@
-import asqLogo from '../assets/Logos/ASQ-Logo.png';
+import asqLogo from '../assets/Logos/ASQ-Logo.webp';
 import ikeaLogo from '../assets/Logos/Ikea-L.jpg';
 import snbLogo from '../assets/Logos/SNB_Logo.jpg';
 import type { ExperienceEntry, ExperienceWithTenure } from '../types/portfolio';

@@ -47,7 +47,7 @@ export function getPortfolioTheme() {
     projectRow:
       'grid grid-cols-12 gap-y-3 py-8 border-b border-slate-700 group cursor-pointer transition-colors max-md:hover:pl-0 md:py-12 md:hover:pl-4 hover:bg-slate-900/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030508]',
     projectId:
-      'font-bold tabular-nums tracking-tight text-sm sm:text-base text-cyan-400/95 drop-shadow-[0_0_12px_rgb(34_211_238/0.35)]',
+      'font-bold tabular-nums tracking-tight text-cyan-400/95 drop-shadow-[0_0_12px_rgb(34_211_238/0.35)]',
     projectTitle: 'text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors sm:text-2xl',
     projectCat: 'text-[10px] font-sans uppercase tracking-widest text-slate-500',
     projectDesc: 'text-sm text-slate-400 leading-relaxed max-w-sm',

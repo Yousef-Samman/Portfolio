@@ -249,6 +249,11 @@ Redeploy both services.
 | CV 404 | Ensure `public/cv/YousefCv.pdf` is in the repo and deployed on Render |
 | Works locally, not production | Restart not enough — env vars must be set in host dashboards |
 
+### Known limitations on Render free tier
+
+- **Message log is ephemeral.** Render’s free disk is wiped on every redeploy and on wake-from-sleep, so `data/contact-messages.jsonl` is a convenience log only — not a durable record. **Email is the source of truth** for contact messages.
+- **In-memory rate limits reset on restart.** The contact rate-limit and cooldown state (`server/lib/rateLimit.ts`, `server/lib/contactCooldown.ts`) live in process memory. On a free instance that sleeps or restarts often, that protection is weaker than the configured numbers suggest (counts reset to zero).
+
 ### View Render logs
 
 Render dashboard → your service → **Logs** → look for `[contact]` lines.
