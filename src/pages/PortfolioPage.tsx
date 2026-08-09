@@ -16,7 +16,7 @@ import { getPortfolioTheme } from '../theme/portfolioTheme';
 export function PortfolioPage() {
   const theme = getPortfolioTheme();
   const activeSection = useActiveNavSection();
-  const cvAvailable = useCvAvailability();
+  const { available: cvAvailable, downloadUrl: cvDownloadUrl } = useCvAvailability();
   const { bootCover, bootFadeOut } = useBootOverlay();
 
   usePortfolioAiClass();
@@ -30,7 +30,11 @@ export function PortfolioPage() {
       <div className="relative z-10">
         <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-16 sm:pt-20 md:pt-24 pb-24 md:pb-48">
           <PortfolioHeader theme={theme} activeSection={activeSection} />
-          <HeroSection theme={theme} cvAvailable={cvAvailable} />
+          <HeroSection
+            theme={theme}
+            cvAvailable={cvAvailable}
+            cvDownloadUrl={cvDownloadUrl}
+          />
           <ExperienceSection theme={theme} />
           <ProjectsSection theme={theme} />
           <EducationSkillsSection theme={theme} />

@@ -1,6 +1,6 @@
 export const CONTACT_INFO = {
   name: 'Yousef Samman',
-  credentialsLine: 'IT Graduate | AI Focus | CCST | KAU',
+  credentialsLine: 'IT Graduate | AI Engineer | CCST | KAU',
   location: 'Jeddah, Saudi Arabia',
   github: 'Yousef-Samman',
   linkedin: 'yousef-samman-615bb2213',

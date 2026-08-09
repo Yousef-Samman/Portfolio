@@ -1,15 +1,15 @@
 import { ArrowUpRight } from 'lucide-react';
 import myPhoto from '../assets/Logos/My-Photo.jpg';
 import { CONTACT_INFO, HERO_INTRO_PARAGRAPHS } from '../data/content';
-import { CV_DOWNLOAD_URL } from '../lib/api';
 import type { PortfolioTheme } from '../theme/portfolioTheme';
 
 type HeroSectionProps = {
   theme: PortfolioTheme;
   cvAvailable: boolean | null;
+  cvDownloadUrl: string;
 };
 
-export function HeroSection({ theme, cvAvailable }: HeroSectionProps) {
+export function HeroSection({ theme, cvAvailable, cvDownloadUrl }: HeroSectionProps) {
   return (
     <section id="about" className="mb-24 md:mb-48 grid grid-cols-12 gap-y-8">
       <div className="col-span-12">
@@ -50,6 +50,8 @@ export function HeroSection({ theme, cvAvailable }: HeroSectionProps) {
                     <>
                       CV PDF — add{' '}
                       <code className="text-cyan-400/80">public/cv/YousefCv.pdf</code>
+                      , then run <code className="text-cyan-400/80">npm run server</code> or{' '}
+                      <code className="text-cyan-400/80">npm run dev:all</code>
                     </>
                   ) : (
                     <>CV download coming soon.</>
@@ -57,8 +59,8 @@ export function HeroSection({ theme, cvAvailable }: HeroSectionProps) {
                 </p>
               ) : (
                 <a
-                  href={CV_DOWNLOAD_URL}
-                  download
+                  href={cvDownloadUrl}
+                  download="YousefCv.pdf"
                   className={`${theme.cvButton} relative z-[1] w-fit max-w-full ${cvAvailable === null ? 'pointer-events-none opacity-60' : ''}`}
                   aria-disabled={cvAvailable === null}
                 >

@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
-import { fetchCvStatus } from '../lib/api';
+import { CV_DOWNLOAD_URL, resolveCvDownload } from '../lib/api';
 
-export function useCvAvailability(): boolean | null {
-  const [available, setAvailable] = useState<boolean | null>(null);
+export type CvAvailability = {
+  available: boolean | null;
+  downloadUrl: string;
+};
+
+export function useCvAvailability(): CvAvailability {
+  const [state, setState] = useState<CvAvailability>({
+    available: null,
+    downloadUrl: CV_DOWNLOAD_URL,
+  });
 
   useEffect(() => {
-    fetchCvStatus()
-      .then((status) => setAvailable(status.available))
-      .catch(() => setAvailable(false));
+    resolveCvDownload()
+      .then((result) =>
+        setState({ available: result.available, downloadUrl: result.url }),
+      )
+      .catch(() => setState({ available: false, downloadUrl: CV_DOWNLOAD_URL }));
   }, []);
 
-  return available;
+  return state;
 }
