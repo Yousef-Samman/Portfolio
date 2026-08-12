@@ -43,16 +43,12 @@ export function PortfolioLayout({
   return (
     <div className={`${theme.shell} relative`}>
       <ScrollToHash />
-      {/* Solid plane always opaque — iOS overscroll must never reveal the WebView’s black void */}
+      {/* Always-on teal plane — Safari chrome + overscroll use the same color as the UI */}
       <div
-        className="pointer-events-none fixed z-0 bg-[#030508]"
-        style={{ top: '-50vh', right: 0, bottom: '-50vh', left: 0 }}
+        className="pointer-events-none fixed inset-0 z-0 bg-[#0b1f2a]"
         aria-hidden
       />
-      <div
-        className="pointer-events-none fixed inset-0 z-0 motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
-        aria-hidden
-      >
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <AiBackdrop />
       </div>
 

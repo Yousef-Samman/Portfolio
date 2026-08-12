@@ -3,7 +3,7 @@ import { AI_GRAPH_EDGES, AI_GRAPH_NODES } from '../data/aiBackdrop';
 export function AiBackdrop() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-[#030508]" aria-hidden />
+      <div className="absolute inset-0 bg-[#0b1f2a]" aria-hidden />
 
       <div
         className="absolute inset-0 opacity-[0.4] motion-safe:animate-grid-drift motion-reduce:animate-none motion-reduce:opacity-[0.22]"
@@ -101,7 +101,7 @@ export function AiBackdrop() {
       />
 
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_96%_90%_at_50%_50%,transparent_22%,rgb(3_5_8/0.72))]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_96%_90%_at_50%_50%,transparent_22%,rgb(11_31_42/0.72))]"
         aria-hidden
       />
     </div>

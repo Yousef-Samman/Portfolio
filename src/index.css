@@ -11,15 +11,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #030508;
+    background-color: #0b1f2a;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     min-height: 100%;
+    min-height: 100dvh;
   }
 
   body {
     @apply text-slate-100 antialiased;
-    background-color: #030508;
+    background-color: #0b1f2a;
     margin: 0;
     min-height: 100%;
     min-height: 100dvh;
@@ -27,19 +28,19 @@
   }
 
   #root {
-    background-color: #030508;
+    background-color: #0b1f2a;
     min-height: 100%;
     min-height: 100dvh;
     min-height: -webkit-fill-available;
   }
 
   html.portfolio-ai {
-    background-color: #030508;
+    background-color: #0b1f2a;
   }
 
   html.portfolio-ai body {
     @apply text-slate-100 antialiased;
-    background-color: #030508;
+    background-color: #0b1f2a;
   }
 
   /* Prefer tap feedback over long-press delays on interactive UI */
