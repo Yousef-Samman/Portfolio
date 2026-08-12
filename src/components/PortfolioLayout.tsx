@@ -37,17 +37,24 @@ export function PortfolioLayout({
   usePortfolioAiClass();
 
   const mainPad = showHeader
-    ? 'mx-auto max-w-[1440px] px-4 pb-20 pt-12 sm:px-6 sm:pb-28 sm:pt-16 md:px-12 md:pb-32 md:pt-20 lg:px-24'
+    ? 'mx-auto max-w-[1440px] px-4 pb-20 pt-8 sm:px-6 sm:pb-28 sm:pt-12 md:px-12 md:pb-32 md:pt-16 lg:px-24'
     : 'mx-auto max-w-[1440px] px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-12 md:pb-24 md:pt-12 lg:px-24';
 
   return (
-    <div className={theme.shell}>
+    <div className={`${theme.shell} relative overflow-x-clip`}>
       <ScrollToHash />
-      <div className="fixed inset-0 z-0 overflow-hidden bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100">
-        <AiBackdrop />
+      {/* Tall fixed plane so iOS rubber-band / Dynamic Island never reveals a black void */}
+      <div
+        className="pointer-events-none fixed inset-x-0 z-0 bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
+        style={{ top: '-50dvh', bottom: '-50dvh' }}
+        aria-hidden
+      >
+        <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
+          <AiBackdrop />
+        </div>
       </div>
 
-      <div className="relative z-10 min-h-[100dvh] bg-transparent">
+      <div className="relative z-10 min-h-[100dvh]">
         <main className={mainPad}>
           {showHeader ? (
             <PortfolioHeader theme={theme} activeSection={activeSection} />

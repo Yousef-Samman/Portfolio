@@ -1,6 +1,5 @@
 import { useId, useState } from 'react';
 import {
-  CAREER_START_ISO,
   EXPERIENCE_FOR_TIMELINE,
   MAX_TENURE_MONTHS,
   TOTAL_TENURE_LABEL,
@@ -213,9 +212,6 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
           </p>
           <p className="mt-1 font-sans text-xl font-extrabold tabular-nums tracking-tight text-cyan-100">
             {TOTAL_TENURE_LABEL}
-          </p>
-          <p className={`mt-1 text-[11px] ${theme.mutedDate}`}>
-            {formatMonthYear(CAREER_START_ISO)} → Present
           </p>
         </div>
       </div>
