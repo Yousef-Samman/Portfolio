@@ -6,7 +6,6 @@ import {
 } from '../data/experience';
 import type { ExperienceWithTenure } from '../types/portfolio';
 import type { PortfolioTheme } from '../theme/portfolioTheme';
-import { formatMonthYear } from '../utils/tenure';
 
 type ExperienceSectionProps = {
   theme: PortfolioTheme;

@@ -6,8 +6,8 @@ export function useBootOverlay() {
 
   useEffect(() => {
     const unlockScroll = () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.documentElement.style.removeProperty('overflow');
+      document.body.style.removeProperty('overflow');
     };
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -16,6 +16,7 @@ export function useBootOverlay() {
       return undefined;
     }
 
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     const fadeTimer = window.setTimeout(() => setBootFadeOut(true), 1100);
     const hideTimer = window.setTimeout(() => {

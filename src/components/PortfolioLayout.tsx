@@ -37,16 +37,16 @@ export function PortfolioLayout({
   usePortfolioAiClass();
 
   const mainPad = showHeader
-    ? 'mx-auto max-w-[1440px] px-4 pb-20 pt-8 sm:px-6 sm:pb-28 sm:pt-12 md:px-12 md:pb-32 md:pt-16 lg:px-24'
-    : 'mx-auto max-w-[1440px] px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-12 md:pb-24 md:pt-12 lg:px-24';
+    ? 'mx-auto max-w-[1440px] px-4 pb-[max(5rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))] sm:px-6 sm:pb-[max(7rem,env(safe-area-inset-bottom))] sm:pt-[max(3rem,env(safe-area-inset-top))] md:px-12 md:pb-32 md:pt-16 lg:px-24'
+    : 'mx-auto max-w-[1440px] px-4 pb-[max(4rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))] sm:px-6 sm:pb-[max(5rem,env(safe-area-inset-bottom))] sm:pt-[max(2.5rem,env(safe-area-inset-top))] md:px-12 md:pb-24 md:pt-12 lg:px-24';
 
   return (
     <div className={`${theme.shell} relative overflow-x-clip`}>
       <ScrollToHash />
-      {/* Tall fixed plane so iOS rubber-band / Dynamic Island never reveals a black void */}
+      {/* Oversized fixed plane — covers Dynamic Island + iOS rubber-band */}
       <div
-        className="pointer-events-none fixed inset-x-0 z-0 bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
-        style={{ top: '-50dvh', bottom: '-50dvh' }}
+        className="pointer-events-none fixed z-0 bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
+        style={{ top: '-100dvh', right: '-25vw', bottom: '-100dvh', left: '-25vw' }}
         aria-hidden
       >
         <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
