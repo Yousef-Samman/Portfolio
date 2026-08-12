@@ -41,10 +41,16 @@ export function PortfolioLayout({
     : 'mx-auto max-w-[1440px] px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-12 md:pb-24 md:pt-12 lg:px-24';
 
   return (
-    <div className={`${theme.shell} relative overflow-x-clip`}>
+    <div className={`${theme.shell} relative`}>
       <ScrollToHash />
+      {/* Solid plane always opaque — iOS overscroll must never reveal the WebView’s black void */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
+        className="pointer-events-none fixed z-0 bg-[#030508]"
+        style={{ top: '-50vh', right: 0, bottom: '-50vh', left: 0 }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-0 motion-safe:animate-backdrop-boot motion-reduce:opacity-100"
         aria-hidden
       >
         <AiBackdrop />

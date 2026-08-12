@@ -101,7 +101,7 @@ export function AiBackdrop() {
       />
 
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_96%_90%_at_50%_50%,transparent_20%,rgb(1_4_12/0.86))]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_96%_90%_at_50%_50%,transparent_22%,rgb(3_5_8/0.72))]"
         aria-hidden
       />
     </div>
