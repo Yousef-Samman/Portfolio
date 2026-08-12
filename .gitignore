@@ -9,3 +9,6 @@ coverage/
 /data/
 .tmp-hackathonhub/
 HackathonHub-main*.zip
+
+# Local CV copies at repo root (public download lives in public/cv/)
+/Yousef_Samman_CV*.pdf

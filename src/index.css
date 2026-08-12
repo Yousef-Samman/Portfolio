@@ -12,6 +12,8 @@
   html {
     scroll-behavior: smooth;
     background-color: #f1f5f9;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -26,6 +28,18 @@
   html.portfolio-ai body {
     @apply text-slate-100 antialiased;
     overflow-x: hidden;
+    /* Keep content clear of iPhone/iPad home indicator + notches */
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Prefer tap feedback over long-press delays on interactive UI */
+  button,
+  a,
+  [role='button'],
+  summary {
+    touch-action: manipulation;
   }
 }
 

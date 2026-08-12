@@ -12,9 +12,11 @@ export const HERO_INTRO_PARAGRAPHS = [
 ] as const;
 
 export const EDUCATION_GPA = '4.83 / 5.0';
+export const EDUCATION_HONOURS = 'First Class Honours';
 
 
 export const EDUCATION_CERTIFICATES = [
+  'IELTS Academic — Overall Band Score 7.0',
   'CCST Networking - Cisco (Apr 2025)',
   'Alison Sales Management Diploma (Apr 2024)',
   'Java Programming - Udemy (May 2023)',

@@ -104,3 +104,48 @@ export async function submitContact(
     },
   };
 }
+
+export const ASSISTANT_QUESTION_MAX_LENGTH = 300;
+/** Keep in sync with server ASSISTANT_HISTORY_MAX_MESSAGES (12 = 6 turns). */
+export const ASSISTANT_HISTORY_MAX_MESSAGES = 12;
+
+export type AssistantHistoryItem = {
+  role: 'user' | 'assistant';
+  text: string;
+};
+
+export async function askAssistant(
+  question: string,
+  history: AssistantHistoryItem[] = [],
+): Promise<ApiResult<{ answer: string }>> {
+  const res = await fetch(apiPath('/api/assistant'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question, history }),
+  });
+
+  const json = (await res.json().catch(() => ({}))) as {
+    ok?: boolean;
+    error?: string;
+    answer?: string;
+  };
+
+  if (!res.ok || !json.ok) {
+    const fallback =
+      res.status === 429
+        ? 'Too many questions right now. Please try again later.'
+        : res.status === 503
+          ? 'The assistant is temporarily unavailable.'
+          : 'Something went wrong. Please try again.';
+    return {
+      ok: false,
+      error: json.error ?? fallback,
+      status: res.status,
+    };
+  }
+
+  return {
+    ok: true,
+    data: { answer: json.answer ?? '' },
+  };
+}

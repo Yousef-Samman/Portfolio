@@ -121,7 +121,7 @@ export const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>
           widgetIdRef.current = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme: 'dark',
-            size: 'normal',
+            size: 'flexible',
             appearance: 'always',
             callback: (token) => {
               if (token) onTokenRef.current(token);
@@ -160,7 +160,7 @@ export const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>
       );
     }
 
-    return <div ref={containerRef} className="flex min-h-[78px] items-center" />;
+    return <div ref={containerRef} className="flex min-h-[78px] w-full max-w-full items-center overflow-x-auto" />;
   },
 );
 

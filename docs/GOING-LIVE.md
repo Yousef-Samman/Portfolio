@@ -65,7 +65,7 @@ Use your actual branch name if not `main`.
    | **Branch** | `main` |
    | **Runtime** | Node |
    | **Build command** | `npm install` |
-   | **Start command** | `npx tsx server/index.ts` |
+   | **Start command** | `npm start` |
    | **Instance type** | Free (or paid for always-on) |
 
 4. **Environment variables** (Render dashboard → Environment):
@@ -87,6 +87,11 @@ Use your actual branch name if not `main`.
    SMTP_PASS=your-16-char-app-password
 
    TURNSTILE_SECRET_KEY=your-turnstile-secret-key
+
+   # Grounded ChatBot (required if the home-page assistant should answer)
+   ANTHROPIC_API_KEY=your-anthropic-api-key
+   ASSISTANT_RATE_LIMIT_PER_HOUR=20
+   ASSISTANT_DAILY_GLOBAL_CAP=100
    ```
 
    Replace `YOUR-VERCEL-URL` after Step 3, then **redeploy** the API (or set a placeholder and update later).
@@ -101,7 +106,7 @@ Use your actual branch name if not `main`.
    https://yousef-portfolio-api.onrender.com/api/health
    ```
 
-   Expect JSON with `"ok": true` and `"turnstile": true`.
+   Expect JSON with `"ok": true`. For a full go-live, also expect `"turnstile": true`, `"email": true`, and `"assistant": true` (if the ChatBot is shipping).
 
 **Note:** Free Render services **sleep** when idle. The first request after sleep may take 30–60 seconds.
 
@@ -173,10 +178,11 @@ Open your **live Vercel URL** and verify:
 - [ ] Home page loads on **phone** and desktop (no overlapping layout)
 - [ ] Nav links scroll to each section
 - [ ] **Download CV** works
-- [ ] `https://YOUR-API.onrender.com/api/health` returns `ok: true`
+- [ ] `https://YOUR-API.onrender.com/api/health` returns `ok: true` (and `email` / `turnstile` / `assistant` as expected)
 - [ ] Contact form: click **Send message** → security check appears → submit succeeds
 - [ ] Email arrives at `CONTACT_NOTIFY_EMAIL`
 - [ ] Second message immediately → **15-minute cooldown** message
+- [ ] Home **ChatBot** answers a portfolio question (if `ANTHROPIC_API_KEY` is set)
 - [ ] View page source → no personal email/phone in HTML
 - [ ] `https://YOUR-SITE.vercel.app/api/health` — should **not** work (API is on Render only); form uses `VITE_API_URL` instead
 
@@ -232,8 +238,11 @@ Redeploy both services.
 | `CONTACT_COOLDOWN_MINUTES` | No | `15` (default) |
 | `CONTACT_RATE_LIMIT_PER_HOUR` | No | `8` (default) |
 | `CV_FILENAME` | No | `YousefCv.pdf` |
+| `ANTHROPIC_API_KEY` | Yes if ChatBot ships | From console.anthropic.com |
+| `ASSISTANT_RATE_LIMIT_PER_HOUR` | No | `20` (default) |
+| `ASSISTANT_DAILY_GLOBAL_CAP` | No | `100` (default) |
 
-**Do not** put `SMTP_PASS` or `TURNSTILE_SECRET_KEY` on Vercel.
+**Do not** put `SMTP_PASS`, `TURNSTILE_SECRET_KEY`, or `ANTHROPIC_API_KEY` on Vercel.
 
 ---
 
@@ -241,6 +250,7 @@ Redeploy both services.
 
 | Problem | Fix |
 |---------|-----|
+| ChatBot returns unavailable | Set `ANTHROPIC_API_KEY` on Render; check health `"assistant": true` |
 | Contact form fails on live site | Check `VITE_API_URL` on Vercel; redeploy after changing env vars |
 | CORS error in browser console | Set `CORS_ORIGIN` on Render to exact Vercel URL (https, no trailing slash) |
 | Turnstile fails | Add live domain in Cloudflare widget; check site key on Vercel + secret on Render |
@@ -273,6 +283,7 @@ Render dashboard → your service → **Logs** → look for `[contact]` lines.
 
 ```bash
 npm run dev:all          # local site + API
+npm start                # production API only (same as Render)
 npm run build            # production frontend build
 npm run lint             # TypeScript check
 ```

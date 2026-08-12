@@ -21,7 +21,20 @@ export type ContactTheme = {
   contactError: string;
 };
 
-export function ContactSection({ theme }: { theme: ContactTheme }) {
+export function ContactSection({
+  theme,
+  standalone = false,
+  hideCallout = false,
+  embedded = false,
+}: {
+  theme: ContactTheme;
+  /** When true, page framing owns the title — hide the in-section heading. */
+  standalone?: boolean;
+  /** When true, skip the default callout (page provides its own status line). */
+  hideCallout?: boolean;
+  /** When true, drop outer card chrome (parent panel provides the surface). */
+  embedded?: boolean;
+}) {
   const turnstileRef = useRef<TurnstileHandle>(null);
   const pendingSubmitRef = useRef(false);
 
@@ -159,21 +172,37 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
   const submitDisabled = busy || waitingForCaptcha;
 
   return (
-    <section id="contact" className="mb-24 md:mb-48 pt-8 md:pt-12 border-t border-slate-600">
-      <h3
-        className={`text-xs font-sans uppercase tracking-[0.3em] font-bold mb-10 ${theme.sectionLabel}`}
-      >
-        Get in Touch
-      </h3>
+    <section
+      id={standalone ? undefined : 'contact'}
+      className={
+        standalone
+          ? 'mb-8 sm:mb-12'
+          : 'mb-16 sm:mb-24 md:mb-48 pt-6 sm:pt-8 md:pt-12 border-t border-slate-600'
+      }
+      aria-label={standalone ? 'Contact form' : undefined}
+    >
+      {standalone ? null : (
+        <h3
+          className={`text-xs font-sans uppercase tracking-[0.3em] font-bold mb-8 sm:mb-10 ${theme.sectionLabel}`}
+        >
+          Get in Touch
+        </h3>
+      )}
 
-      <div className={theme.contactCalloutBox}>
-        <p className={theme.contactCalloutText}>
-          Send a message including the email you want a reply sent to.
-        </p>
-      </div>
+      {!hideCallout ? (
+        <div className={theme.contactCalloutBox}>
+          <p className={theme.contactCalloutText}>
+            Send a message including the email you want a reply sent to.
+          </p>
+        </div>
+      ) : null}
 
       <form
-        className={`${theme.contactCard} p-5 sm:p-8 md:p-10 space-y-5`}
+        className={
+          embedded
+            ? 'relative space-y-5'
+            : `${theme.contactCard} relative space-y-5 p-4 sm:p-8 md:p-10`
+        }
         onSubmit={onSubmit}
         noValidate
       >
@@ -190,7 +219,7 @@ export function ContactSection({ theme }: { theme: ContactTheme }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="contact-name" className={theme.contactLabel}>
               Name
