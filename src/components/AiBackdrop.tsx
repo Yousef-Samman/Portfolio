@@ -3,7 +3,12 @@ import { AI_GRAPH_EDGES, AI_GRAPH_NODES } from '../data/aiBackdrop';
 export function AiBackdrop() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-[#030508]" aria-hidden />
+      {/* Use background-image (not background-color) so Safari 26 edge sampling ignores it */}
+      <div
+        className="absolute inset-0"
+        style={{ backgroundImage: 'linear-gradient(#030508, #030508)' }}
+        aria-hidden
+      />
 
       <div
         className="absolute inset-0 opacity-[0.4] motion-safe:animate-grid-drift motion-reduce:animate-none motion-reduce:opacity-[0.22]"
@@ -13,6 +18,11 @@ export function AiBackdrop() {
             linear-gradient(90deg, rgb(34 211 238 / 0.045) 1px, transparent 1px)
           `,
           backgroundSize: '64px 64px, 64px 64px',
+          backgroundPosition: '0 48px, 0 0',
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent 0, black 28px, black 100%)',
+          maskImage:
+            'linear-gradient(to bottom, transparent 0, black 28px, black 100%)',
         }}
         aria-hidden
       />

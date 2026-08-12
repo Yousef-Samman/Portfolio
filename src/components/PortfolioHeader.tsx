@@ -42,7 +42,7 @@ export function PortfolioHeader({ theme, activeSection }: PortfolioHeaderProps) 
 
   return (
     <header
-      className={`mb-10 flex flex-col gap-6 pb-8 sm:mb-14 sm:gap-8 sm:pb-10 md:mb-16 md:gap-10 md:pb-12 lg:mb-20 lg:flex-row lg:items-start lg:justify-between lg:gap-6 ${theme.headerBorder}`}
+      className="mb-10 flex flex-col gap-6 pb-8 sm:mb-14 sm:gap-8 sm:pb-10 md:mb-16 md:gap-10 md:pb-12 lg:mb-20 lg:flex-row lg:items-start lg:justify-between lg:gap-6"
     >
       <div className="min-w-0 w-full lg:flex-1 lg:pr-2">
         <h1

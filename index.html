@@ -8,10 +8,11 @@
       content="Yousef Samman — IT graduate (KAU) focused on AI. HackathonHub multi-agent graduation project, professional experience, and technical toolkit. Based in Jeddah, Saudi Arabia."
     />
     <meta name="author" content="Yousef Samman" />
-    <!-- Exact match to page bg — avoids Safari hairline seam between chrome and content -->
-    <meta name="theme-color" content="#030508" />
-    <meta name="theme-color" content="#030508" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#030508" media="(prefers-color-scheme: light)" />
+    <!--
+      No theme-color on purpose. iPhone Safari 26+ tints the top chrome from
+      theme-color / fixed edge backgrounds and draws a hard border bar.
+      Leaving it unset keeps the chrome translucent while scrolling.
+    -->
     <meta name="color-scheme" content="dark" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

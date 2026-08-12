@@ -43,11 +43,16 @@ export function PortfolioLayout({
   return (
     <div className={`${theme.shell} relative`}>
       <ScrollToHash />
-      {/* Exact page color — matches theme-color so Safari draws no top hairline seam */}
+      {/*
+        Safari 26+ samples fixed/sticky edge backgrounds to tint the top chrome.
+        A solid fixed bg creates the hard top “border” bar. This 4px sampler has
+        NO background-color on purpose → translucent chrome; page shows through.
+      */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 bg-[#030508]"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-1 w-full"
         aria-hidden
       />
+      {/* Visual backdrop only — wrapper must stay background-free for the sampler above */}
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <AiBackdrop />
       </div>
