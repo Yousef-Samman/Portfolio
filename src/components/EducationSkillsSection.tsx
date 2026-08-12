@@ -18,7 +18,7 @@ export function EducationSkillsSection({ theme }: EducationSkillsSectionProps) {
           Education
         </h3>
         <p className="mt-2 max-w-xl text-sm text-slate-400">
-          Degree, GPA, and certificates — the same facts the chatbot is grounded on.
+          Degree, GPA, and certificates.
         </p>
       </div>
 

@@ -163,8 +163,10 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
             id={disclaimerId}
             className="mt-2 max-w-xl text-sm leading-relaxed text-slate-400"
           >
-            Grounded on this portfolio — education, experience, projects, and
-            skills. 20 questions / hour.
+            Grounded on this portfolio's education, experience, projects, and
+            skills.
+            <br />
+            20 questions / hour.
           </p>
         </div>
         {hasHistory ? (

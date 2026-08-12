@@ -202,7 +202,9 @@ export function ExperienceSection({ theme }: ExperienceSectionProps) {
             Experience
           </h3>
           <p className="mt-2 max-w-xl text-sm text-slate-400">
-            Roles and tenure — expand a card for summary and focus areas.
+            Roles and tenure.
+            <br />
+            Expand a card for summary and focus areas.
           </p>
         </div>
         <div className="rounded-xl border border-cyan-500/25 bg-gradient-to-br from-cyan-950/40 to-slate-950/70 px-4 py-3 transition-all duration-200 hover:border-cyan-400/45 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] sm:min-w-[14rem]">
