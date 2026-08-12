@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Before go-live: replace YOUR_DOMAIN_HERE with your live site origin (no path), e.g. https://yousef-portfolio.vercel.app -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/projects</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/projects/hackathonhub</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects/hackathonhub</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/projects/tafweej-hajj</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects/tafweej-hajj</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/projects/smart-notifier</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects/smart-notifier</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/projects/travella</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects/travella</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/contact</loc>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
