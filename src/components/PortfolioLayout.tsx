@@ -37,22 +37,22 @@ export function PortfolioLayout({
   usePortfolioAiClass();
 
   const mainPad = showHeader
-    ? 'mx-auto max-w-[1440px] px-4 pb-20 pt-8 sm:px-6 sm:pb-28 sm:pt-12 md:px-12 md:pb-32 md:pt-16 lg:px-24'
-    : 'mx-auto max-w-[1440px] px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-12 md:pb-24 md:pt-12 lg:px-24';
+    ? 'mx-auto max-w-[1440px] px-4 pb-20 pt-4 sm:px-6 sm:pb-28 sm:pt-12 md:px-12 md:pb-32 md:pt-16 lg:px-24'
+    : 'mx-auto max-w-[1440px] px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-10 md:px-12 md:pb-24 md:pt-12 lg:px-24';
 
   return (
     <div className={`${theme.shell} relative`}>
       <ScrollToHash />
-      {/* Always-on teal plane — Safari chrome + overscroll use the same color as the UI */}
+      {/* Exact page color — matches theme-color so Safari draws no top hairline seam */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 bg-[#0b1f2a]"
+        className="pointer-events-none fixed inset-0 z-0 bg-[#030508]"
         aria-hidden
       />
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <AiBackdrop />
       </div>
 
-      <div className="relative z-10 min-h-[100dvh]">
+      <div className="relative z-10 min-h-[100dvh] min-h-[100svh]">
         <main className={mainPad}>
           {showHeader ? (
             <PortfolioHeader theme={theme} activeSection={activeSection} />

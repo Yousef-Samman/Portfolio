@@ -13,7 +13,7 @@ const BOOT_NODES = [
 export function ModelBootOverlay({ fadeOut }: ModelBootOverlayProps) {
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0b1f2a]/96 transition-opacity duration-500 ease-out ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#030508]/96 transition-opacity duration-500 ease-out ${
         fadeOut ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
       aria-busy={!fadeOut}
