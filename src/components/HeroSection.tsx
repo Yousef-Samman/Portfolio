@@ -29,7 +29,7 @@ export function HeroSection({ theme, cvAvailable, cvDownloadUrl }: HeroSectionPr
               <img
                 src={myPhoto}
                 alt={`Portrait of ${CONTACT_INFO.name}`}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out hover:scale-[1.03]"
+                className="absolute inset-0 h-full w-full object-cover object-[center_12%] transition-transform duration-500 ease-out hover:scale-[1.03]"
                 loading="eager"
                 decoding="async"
                 fetchPriority="high"
