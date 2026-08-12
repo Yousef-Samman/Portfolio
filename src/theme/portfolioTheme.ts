@@ -1,6 +1,6 @@
 export function getPortfolioTheme() {
   return {
-    shell: 'min-h-screen overflow-x-hidden bg-[#030508] text-slate-100 font-sans',
+    shell: 'min-h-[100dvh] min-h-screen overflow-x-hidden bg-[#030508] text-slate-100 font-sans',
     headerBorder: 'border-b border-slate-700/90',
     name: 'text-slate-50',
     subtitle: 'text-slate-500',

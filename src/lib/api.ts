@@ -72,37 +72,59 @@ export async function resolveCvDownload(): Promise<CvResolveResult> {
 export async function submitContact(
   payload: ContactFormData,
 ): Promise<ApiResult<{ message: string }>> {
-  const res = await fetch(apiPath('/api/contact'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+  const controller = new AbortController();
+  const timeoutMs = 90_000;
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-  const json = (await res.json().catch(() => ({}))) as {
-    ok?: boolean;
-    error?: string;
-    message?: string;
-    retryAfterSec?: number;
-  };
+  try {
+    const res = await fetch(apiPath('/api/contact'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
 
-  if (!res.ok || !json.ok) {
-    const fallback =
-      res.status === 429
-        ? 'Please wait before sending another message.'
-        : 'Something went wrong. Please try again.';
+    const json = (await res.json().catch(() => ({}))) as {
+      ok?: boolean;
+      error?: string;
+      message?: string;
+      retryAfterSec?: number;
+    };
+
+    if (!res.ok || !json.ok) {
+      const fallback =
+        res.status === 429
+          ? 'Please wait before sending another message.'
+          : 'Something went wrong. Please try again.';
+      return {
+        ok: false,
+        error: json.error ?? fallback,
+        status: res.status,
+      };
+    }
+
+    return {
+      ok: true,
+      data: {
+        message: json.message ?? 'Thank you for the message. I will reply asap.',
+      },
+    };
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      return {
+        ok: false,
+        error:
+          'The server took too long to respond (it may have been waking up). Please try Send again.',
+        status: 504,
+      };
+    }
     return {
       ok: false,
-      error: json.error ?? fallback,
-      status: res.status,
+      error: 'Could not reach the server. Check your connection and try again.',
     };
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  return {
-    ok: true,
-    data: {
-      message: json.message ?? 'Thank you for the message. I will reply asap.',
-    },
-  };
 }
 
 export const ASSISTANT_QUESTION_MAX_LENGTH = 300;

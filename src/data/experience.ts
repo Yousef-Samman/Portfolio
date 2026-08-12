@@ -8,17 +8,17 @@ import {
 } from '../utils/tenure';
 
 const EXPERIENCE: ExperienceEntry[] = [
-  {
-    company: 'ASQ INTERNATIONAL Food & Beverages Co. Ltd',
-    role: 'Store Manager',
-    date: 'Dec 2025 - Present',
-    startISO: '2025-12-01',
-    endISO: null,
-    logo: asqLogo,
-    summary:
-      'Leading daily operations at Crepe & Dip, managing team performance, and maintaining service excellence.',
-    bullets: ['Store Management', 'Technical Support', 'Team Leadership'],
-  },
+    {
+      company: 'ASQ INTERNATIONAL Food & Beverages Co. Ltd',
+      role: 'Store Manager',
+      date: 'Dec 2025 - Aug 2026',
+      startISO: '2025-12-01',
+      endISO: '2026-08-12',
+      logo: asqLogo,
+      summary:
+        'Led daily operations at Crepe & Dip, managed team performance, and maintained service excellence.',
+      bullets: ['Store Management', 'Technical Support', 'Team Leadership'],
+    },
   {
     company: 'ASQ INTERNATIONAL Food & Beverages Co. Ltd',
     role: 'Cashier',

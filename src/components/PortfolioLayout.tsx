@@ -43,11 +43,11 @@ export function PortfolioLayout({
   return (
     <div className={theme.shell}>
       <ScrollToHash />
-      <div className="fixed inset-0 z-0 overflow-hidden motion-safe:animate-backdrop-boot motion-reduce:opacity-100">
+      <div className="fixed inset-0 z-0 overflow-hidden bg-[#030508] motion-safe:animate-backdrop-boot motion-reduce:opacity-100">
         <AiBackdrop />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 min-h-[100dvh] bg-transparent">
         <main className={mainPad}>
           {showHeader ? (
             <PortfolioHeader theme={theme} activeSection={activeSection} />

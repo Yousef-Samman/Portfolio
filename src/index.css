@@ -11,23 +11,29 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #f1f5f9;
+    background-color: #030508;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    overscroll-behavior-y: none;
   }
 
   body {
     @apply text-[#1a1a1a] antialiased;
+    background-color: #030508;
+    overscroll-behavior-y: none;
   }
 
   html.portfolio-ai {
     background-color: #030508;
     overflow-x: hidden;
+    overscroll-behavior-y: none;
   }
 
   html.portfolio-ai body {
     @apply text-slate-100 antialiased;
+    background-color: #030508;
     overflow-x: hidden;
+    overscroll-behavior-y: none;
     /* Keep content clear of iPhone/iPad home indicator + notches */
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);

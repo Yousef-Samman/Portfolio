@@ -86,7 +86,7 @@ export function ContactSection({
     }
 
     setStatus('sending');
-    setFeedback('');
+    setFeedback('Sending… if this is the first message in a while, the server may take up to a minute to wake.');
 
     const result = await submitContact({
       name,
@@ -354,6 +354,11 @@ export function ContactSection({
 
         {status === 'success' ? (
           <p className={theme.contactSuccess} role="status">
+            {feedback}
+          </p>
+        ) : null}
+        {status === 'sending' && feedback ? (
+          <p className="text-sm text-cyan-300/80" role="status">
             {feedback}
           </p>
         ) : null}

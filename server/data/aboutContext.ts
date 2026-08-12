@@ -88,9 +88,9 @@ export const ABOUT_CONTEXT: AboutContext = {
     {
       company: 'ASQ INTERNATIONAL Food & Beverages Co. Ltd',
       role: 'Store Manager',
-      date: 'Dec 2025 - Present',
+      date: 'Dec 2025 - Aug 2026',
       summary:
-        'Leading daily operations at Crepe & Dip, managing team performance, and maintaining service excellence.',
+        'Led daily operations at Crepe & Dip, managed team performance, and maintained service excellence.',
       bullets: ['Store Management', 'Technical Support', 'Team Leadership'],
     },
     {
@@ -328,11 +328,14 @@ export function formatAboutContext(): string {
     `- Tools: ${c.skills.tools.join(', ')}`,
     '',
     'Contact:',
-    '- Prefer the portfolio contact form (/contact) or LinkedIn.',
+    '- Prefer the Get In Touch feature on this portfolio (Contact page) or LinkedIn.',
     '',
     'Notes for answering:',
+    '- Always speak in first person as Yousef (I / my / me).',
+    '- Plain text only — never markdown bold, italics, or links.',
+    '- When inviting contact, tell them to use the Get In Touch feature to reach out to you.',
     '- Project source code is not publicly linked from the portfolio site.',
-    '- If asked for a repo/code link, say the code is not publicly linked from the site and they can ask Yousef directly.',
+    '- If asked for a repo/code link, say the code is not publicly linked from the site and they can ask you directly via Get In Touch.',
     '- Do not invent live demos, employers, dates, or tech that are not listed above.',
   );
 

@@ -197,7 +197,7 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
         </div>
 
         <div
-          className="space-y-4 px-4 py-5 sm:px-6 sm:py-6"
+          className="space-y-3 px-3 py-4 sm:space-y-4 sm:px-6 sm:py-6"
           aria-live="polite"
           aria-relevant="additions"
           id={liveRegionId}
@@ -205,10 +205,10 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
           {showEmpty ? (
             <div className="mx-auto max-w-lg py-4 text-center sm:py-8">
               <p className="text-base font-medium tracking-tight text-slate-200 sm:text-lg">
-                Ask anything about Yousef&apos;s work
+                Ask me anything about my work
               </p>
               <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                Pick a starter or type your own question below.
+                Tap a starter or type below — I answer as Yousef.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-2">
                 {STARTER_PROMPTS.map((prompt) => (
@@ -231,18 +231,18 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
               key={message.id}
               className={
                 message.role === 'user'
-                  ? 'ml-auto flex max-w-[min(100%,36rem)] flex-col items-end gap-1'
-                  : 'mr-auto flex max-w-[min(100%,40rem)] flex-col items-start gap-1'
+                  ? 'ml-auto flex max-w-[min(92%,34rem)] flex-col items-end gap-1'
+                  : 'mr-auto flex max-w-[min(92%,38rem)] flex-col items-start gap-1'
               }
             >
               <span className="px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                {message.role === 'user' ? 'You' : 'ChatBot'}
+                {message.role === 'user' ? 'You' : 'Yousef'}
               </span>
               <div
                 className={
                   message.role === 'user'
-                    ? 'rounded-2xl rounded-br-md bg-cyan-500/20 px-4 py-3 text-sm leading-relaxed text-slate-50 ring-1 ring-cyan-400/25'
-                    : 'rounded-2xl rounded-bl-md bg-slate-900/90 px-4 py-3 text-sm leading-relaxed text-slate-300 ring-1 ring-slate-700/80'
+                    ? 'rounded-2xl rounded-br-md bg-cyan-500/20 px-3.5 py-2.5 text-[15px] leading-relaxed text-slate-50 ring-1 ring-cyan-400/25 sm:px-4 sm:py-3 sm:text-sm'
+                    : 'rounded-2xl rounded-bl-md bg-slate-900/90 px-3.5 py-2.5 text-[15px] leading-relaxed text-slate-200 ring-1 ring-slate-700/80 sm:px-4 sm:py-3 sm:text-sm'
                 }
               >
                 <p className="whitespace-pre-wrap break-words">{message.text}</p>
@@ -253,13 +253,13 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
           {sending ? (
             <div className="mr-auto flex max-w-[12rem] flex-col items-start gap-1" role="status">
               <span className="px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                ChatBot
+                Yousef
               </span>
               <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md bg-slate-900/90 px-4 py-3 ring-1 ring-slate-700/80">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400/90 motion-reduce:animate-none" />
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400/70 [animation-delay:150ms] motion-reduce:animate-none" />
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400/50 [animation-delay:300ms] motion-reduce:animate-none" />
-                <span className="sr-only">ChatBot is thinking</span>
+                <span className="sr-only">Thinking</span>
               </div>
             </div>
           ) : null}
@@ -273,7 +273,7 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
 
         <form
           onSubmit={(event) => void handleSubmit(event)}
-          className="sticky bottom-0 border-t border-white/5 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:px-5 sm:py-4"
+          className="sticky bottom-0 border-t border-white/5 bg-slate-950/95 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md sm:px-5 sm:py-4"
         >
           {error ? (
             <p className={`mb-2 px-1 ${theme.contactError}`} role="alert">
@@ -283,7 +283,7 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
 
           <div className="flex items-end gap-2 sm:gap-3">
             <label htmlFor="yousefai-question" className="sr-only">
-              Ask Yousef - ChatBot a question
+              Ask Yousef a question
             </label>
             <textarea
               ref={inputRef}
@@ -300,15 +300,15 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
               }}
               onKeyDown={onComposerKeyDown}
               disabled={sending}
-              placeholder="Ask about projects, education, experience…"
-              className={`${theme.contactInput} max-h-36 min-h-[2.75rem] flex-1 resize-none overflow-y-auto py-2.5 leading-snug transition-colors duration-200 hover:border-slate-500/90`}
+              placeholder="Ask me about projects, education, experience…"
+              className={`${theme.contactInput} max-h-36 min-h-12 flex-1 resize-none overflow-y-auto py-3 text-base leading-snug transition-colors duration-200 hover:border-slate-500/90 sm:min-h-[2.75rem] sm:py-2.5 sm:text-sm`}
               enterKeyHint="send"
             />
             <button
               type="submit"
               disabled={!canSend}
               aria-label="Send question"
-              className={`${canSend ? theme.contactSubmit : theme.contactSubmitDisabled} !w-11 shrink-0 !px-0 sm:!w-12`}
+              className={`${canSend ? theme.contactSubmit : theme.contactSubmitDisabled} !h-12 !w-12 shrink-0 !px-0 sm:!h-11 sm:!w-12`}
             >
               <Send className="h-4 w-4" aria-hidden />
             </button>
@@ -321,10 +321,6 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
             aria-live="polite"
           >
             {question.length}/{ASSISTANT_QUESTION_MAX_LENGTH}
-            <span className="hidden text-slate-600 sm:inline">
-              {' '}
-              · Enter to send
-            </span>
           </p>
         </form>
       </div>

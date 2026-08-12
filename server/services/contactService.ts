@@ -1,5 +1,8 @@
 import { saveContactMessage } from '../lib/contactStore.js';
-import { sendContactNotification } from '../lib/sendContactEmail.js';
+import {
+  isEmailConfigured,
+  sendContactNotification,
+} from '../lib/sendContactEmail.js';
 import type { ContactPayload } from '../lib/validators.js';
 
 export type ContactSubmitResult =
@@ -8,7 +11,8 @@ export type ContactSubmitResult =
 
 /**
  * Persists a contact message and attempts email notification.
- * Save success is returned even when email fails (logged server-side).
+ * When email is configured, a failed/skipped send is treated as an error
+ * so the visitor is not told the message was delivered when it was not.
  */
 export async function submitContactMessage(
   payload: ContactPayload,
@@ -16,6 +20,7 @@ export async function submitContactMessage(
 ): Promise<ContactSubmitResult> {
   try {
     const record = await saveContactMessage(payload, clientIp);
+    const emailExpected = isEmailConfigured();
 
     try {
       const emailResult = await sendContactNotification(payload, record.id);
@@ -23,16 +28,35 @@ export async function submitContactMessage(
         console.log(
           `[contact] ${record.id} saved and emailed from ${payload.email}`,
         );
-      } else if (emailResult.skippedReason) {
-        console.warn(
-          `[contact] ${record.id} saved; email not sent: ${emailResult.skippedReason}`,
-        );
+        return { ok: true, id: record.id };
       }
+
+      if (emailExpected) {
+        console.warn(
+          `[contact] ${record.id} saved; email not sent: ${emailResult.skippedReason ?? 'unknown'}`,
+        );
+        return {
+          ok: false,
+          error:
+            'Your message was received but the email notification failed. Please try again in a few minutes, or reach out on LinkedIn.',
+        };
+      }
+
+      console.warn(
+        `[contact] ${record.id} saved; email not configured: ${emailResult.skippedReason}`,
+      );
+      return { ok: true, id: record.id };
     } catch (emailErr) {
       console.error(`[contact] ${record.id} saved; email failed:`, emailErr);
+      if (emailExpected) {
+        return {
+          ok: false,
+          error:
+            'Your message was received but the email notification failed. Please try again in a few minutes, or reach out on LinkedIn.',
+        };
+      }
+      return { ok: true, id: record.id };
     }
-
-    return { ok: true, id: record.id };
   } catch (err) {
     console.error('[contact] Failed to save message', err);
     return {
