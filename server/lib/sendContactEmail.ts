@@ -104,6 +104,40 @@ function smtpAttempts(): SmtpAttempt[] {
   return fallback ? [primary, fallback] : [primary];
 }
 
+type NodemailerModule = {
+  createTransport: (options: Record<string, unknown>) => {
+    sendMail: (mail: Record<string, unknown>) => Promise<unknown>;
+    verify: () => Promise<unknown>;
+  };
+};
+
+function createSmtpTransport(
+  nodemailer: NodemailerModule,
+  attempt: SmtpAttempt,
+  auth: { user: string; pass: string },
+  timeouts: {
+    connectionTimeout: number;
+    greetingTimeout: number;
+    socketTimeout: number;
+  },
+) {
+  return nodemailer.createTransport({
+    host: attempt.host,
+    port: attempt.port,
+    secure: attempt.secure,
+    requireTLS: attempt.requireTLS,
+    auth,
+    // Render has no working IPv6 egress — Gmail AAAA records cause ENETUNREACH.
+    family: 4,
+    connectionTimeout: timeouts.connectionTimeout,
+    greetingTimeout: timeouts.greetingTimeout,
+    socketTimeout: timeouts.socketTimeout,
+    tls: {
+      minVersion: 'TLSv1.2',
+    },
+  });
+}
+
 async function sendViaSmtp(
   to: string,
   payload: ContactPayload,
@@ -124,19 +158,16 @@ async function sendViaSmtp(
 
   for (const attempt of attempts) {
     try {
-      const transport = nodemailer.createTransport({
-        host: attempt.host,
-        port: attempt.port,
-        secure: attempt.secure,
-        requireTLS: attempt.requireTLS,
-        auth: { user, pass },
-        connectionTimeout: 25_000,
-        greetingTimeout: 25_000,
-        socketTimeout: 40_000,
-        tls: {
-          minVersion: 'TLSv1.2',
+      const transport = createSmtpTransport(
+        nodemailer,
+        attempt,
+        { user, pass },
+        {
+          connectionTimeout: 25_000,
+          greetingTimeout: 25_000,
+          socketTimeout: 40_000,
         },
-      });
+      );
 
       await transport.sendMail({
         from,
@@ -240,22 +271,21 @@ export async function verifyEmailTransport(): Promise<{
 
   for (const attempt of attempts) {
     try {
-      const transport = nodemailer.createTransport({
-        host: attempt.host,
-        port: attempt.port,
-        secure: attempt.secure,
-        requireTLS: attempt.requireTLS,
-        auth: { user, pass },
-        connectionTimeout: 15_000,
-        greetingTimeout: 15_000,
-        socketTimeout: 20_000,
-        tls: { minVersion: 'TLSv1.2' },
-      });
+      const transport = createSmtpTransport(
+        nodemailer,
+        attempt,
+        { user, pass },
+        {
+          connectionTimeout: 15_000,
+          greetingTimeout: 15_000,
+          socketTimeout: 20_000,
+        },
+      );
       await transport.verify();
       return {
         ok: true,
         provider: 'smtp',
-        detail: `verified ${attempt.host}:${attempt.port}`,
+        detail: `verified ${attempt.host}:${attempt.port} (ipv4)`,
       };
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
