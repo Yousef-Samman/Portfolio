@@ -255,7 +255,7 @@ Redeploy both services.
 | CORS error in browser console | Set `CORS_ORIGIN` on Render to exact Vercel URL (https, no trailing slash) |
 | Turnstile fails | Add live domain in Cloudflare widget; check site key on Vercel + secret on Render |
 | API very slow first time | Free Render woke from sleep — normal |
-| Email not sent | Check Render logs; verify SMTP App Password on Render env |
+| Email not sent / SMTP timeout on Render | **Render blocks Gmail SMTP.** Add `RESEND_API_KEY` on Render (https://resend.com). Keep `CONTACT_NOTIFY_EMAIL` as the inbox you signed up with on Resend free tier. |
 | CV 404 | Ensure `public/cv/YousefCv.pdf` is in the repo and deployed on Render |
 | Works locally, not production | Restart not enough — env vars must be set in host dashboards |
 

@@ -42,37 +42,65 @@ function buildEmailContent(payload: ContactPayload, messageId: string) {
   return { subjectLine, html, text };
 }
 
+/** Render (and similar PaaS) block outbound SMTP — use Resend HTTPS instead. */
+function isSmtpBlockedHost(): boolean {
+  return Boolean(
+    process.env.RENDER ||
+      process.env.RENDER_EXTERNAL_URL ||
+      process.env.RENDER_EXTERNAL_HOSTNAME,
+  );
+}
+
+function hasResendConfig(): boolean {
+  return Boolean(process.env.RESEND_API_KEY?.trim());
+}
+
+function hasSmtpConfig(): boolean {
+  return Boolean(
+    process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim(),
+  );
+}
+
 async function sendViaResend(
   to: string,
   payload: ContactPayload,
   messageId: string,
 ): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) throw new Error('RESEND_API_KEY not set');
 
   const from =
-    process.env.CONTACT_EMAIL_FROM?.trim() || 'Portfolio <onboarding@resend.dev>';
+    process.env.CONTACT_EMAIL_FROM?.trim() ||
+    'Portfolio Contact <onboarding@resend.dev>';
   const { subjectLine, html, text } = buildEmailContent(payload, messageId);
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject: subjectLine,
-      html,
-      text,
-      reply_to: payload.email,
-    }),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25_000);
 
-  if (!res.ok) {
-    const body = await res.text().catch(() => '');
-    throw new Error(`Resend API ${res.status}: ${body}`);
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject: subjectLine,
+        html,
+        text,
+        reply_to: payload.email,
+      }),
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      const body = await res.text().catch(() => '');
+      throw new Error(`Resend API ${res.status}: ${body}`);
+    }
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
@@ -143,6 +171,12 @@ async function sendViaSmtp(
   payload: ContactPayload,
   messageId: string,
 ): Promise<void> {
+  if (isSmtpBlockedHost()) {
+    throw new Error(
+      'SMTP ports are blocked on Render. Add RESEND_API_KEY (https://resend.com) — HTTPS email works; Gmail SMTP does not.',
+    );
+  }
+
   const user = process.env.SMTP_USER?.trim();
   // Gmail app passwords are often pasted with spaces — strip them.
   const pass = process.env.SMTP_PASS?.trim()?.replace(/\s+/g, '');
@@ -216,48 +250,72 @@ export async function sendContactNotification(
     return { sent: false, skippedReason: 'daily email cap reached' };
   }
 
-  const hasResend = Boolean(process.env.RESEND_API_KEY?.trim());
-  const hasSmtp = Boolean(
-    process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim(),
-  );
+  const resendReady = hasResendConfig();
+  const smtpReady = hasSmtpConfig();
 
-  if (!hasResend && !hasSmtp) {
+  if (!resendReady && !smtpReady) {
     return {
       sent: false,
-      skippedReason: 'Configure RESEND_API_KEY or SMTP_USER + SMTP_PASS',
+      skippedReason:
+        'Configure RESEND_API_KEY (required on Render) or SMTP for local',
     };
   }
 
-  if (hasResend) {
+  // Prefer Resend everywhere — required on Render (SMTP ports blocked).
+  if (resendReady) {
     await sendViaResend(to, payload, messageId);
-  } else {
-    await sendViaSmtp(to, payload, messageId);
+    return { sent: true };
   }
 
+  await sendViaSmtp(to, payload, messageId);
   return { sent: true };
 }
 
 export function isEmailConfigured(): boolean {
   const to = process.env.CONTACT_NOTIFY_EMAIL?.trim();
-  const hasResend = Boolean(process.env.RESEND_API_KEY?.trim());
-  const hasSmtp = Boolean(
-    process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim(),
-  );
-  return Boolean(to && (hasResend || hasSmtp));
+  if (!to) return false;
+
+  // On Render, only Resend counts — Gmail SMTP cannot connect (timeout / blocked ports).
+  if (isSmtpBlockedHost()) {
+    return hasResendConfig();
+  }
+
+  return hasResendConfig() || hasSmtpConfig();
 }
 
-/** Non-throwing boot check — logs whether SMTP accepts auth (no email sent). */
+/** Non-throwing boot check — logs whether email delivery can work. */
 export async function verifyEmailTransport(): Promise<{
   ok: boolean;
   provider: 'resend' | 'smtp' | 'none';
   detail?: string;
 }> {
-  if (!isEmailConfigured()) {
-    return { ok: false, provider: 'none', detail: 'not configured' };
+  if (!process.env.CONTACT_NOTIFY_EMAIL?.trim()) {
+    return { ok: false, provider: 'none', detail: 'CONTACT_NOTIFY_EMAIL not set' };
   }
 
-  if (process.env.RESEND_API_KEY?.trim()) {
-    return { ok: true, provider: 'resend', detail: 'api key present' };
+  if (hasResendConfig()) {
+    return {
+      ok: true,
+      provider: 'resend',
+      detail: 'RESEND_API_KEY present (HTTPS — works on Render)',
+    };
+  }
+
+  if (isSmtpBlockedHost()) {
+    return {
+      ok: false,
+      provider: 'none',
+      detail:
+        'Render blocks Gmail SMTP. Add RESEND_API_KEY from https://resend.com/api-keys',
+    };
+  }
+
+  if (!hasSmtpConfig()) {
+    return {
+      ok: false,
+      provider: 'none',
+      detail: 'Configure RESEND_API_KEY or SMTP_USER + SMTP_PASS',
+    };
   }
 
   const user = process.env.SMTP_USER?.trim();
@@ -296,5 +354,9 @@ export async function verifyEmailTransport(): Promise<{
     }
   }
 
-  return { ok: false, provider: 'smtp', detail: 'verify failed on all ports' };
+  return {
+    ok: false,
+    provider: 'smtp',
+    detail: 'SMTP verify failed — use RESEND_API_KEY for hosted deploys',
+  };
 }
