@@ -76,35 +76,98 @@ async function sendViaResend(
   }
 }
 
+type SmtpAttempt = {
+  host: string;
+  port: number;
+  secure: boolean;
+  requireTLS: boolean;
+};
+
+function smtpAttempts(): SmtpAttempt[] {
+  const host = process.env.SMTP_HOST?.trim() || 'smtp.gmail.com';
+  const configuredPort = Number(process.env.SMTP_PORT ?? 587);
+  const forceSecure = process.env.SMTP_SECURE === 'true';
+
+  const primary: SmtpAttempt = {
+    host,
+    port: configuredPort,
+    secure: forceSecure || configuredPort === 465,
+    requireTLS: !forceSecure && configuredPort === 587,
+  };
+
+  // Gmail on some hosts (incl. Render) can block/flake on 587 — fall back to 465.
+  const fallback: SmtpAttempt | null =
+    host.includes('gmail.com') && configuredPort === 587
+      ? { host, port: 465, secure: true, requireTLS: false }
+      : null;
+
+  return fallback ? [primary, fallback] : [primary];
+}
+
 async function sendViaSmtp(
   to: string,
   payload: ContactPayload,
   messageId: string,
 ): Promise<void> {
   const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS?.trim();
+  // Gmail app passwords are often pasted with spaces — strip them.
+  const pass = process.env.SMTP_PASS?.trim()?.replace(/\s+/g, '');
   if (!user || !pass) throw new Error('SMTP_USER or SMTP_PASS not set');
 
   const nodemailer = await import('nodemailer');
-  const transport = nodemailer.createTransport({
-    host: process.env.SMTP_HOST?.trim() || 'smtp.gmail.com',
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: { user, pass },
-  });
-
   const from =
     process.env.CONTACT_EMAIL_FROM?.trim() || `"Portfolio" <${user}>`;
   const { subjectLine, html, text } = buildEmailContent(payload, messageId);
+  const attempts = smtpAttempts();
 
-  await transport.sendMail({
-    from,
-    to,
-    replyTo: payload.email,
-    subject: subjectLine,
-    html,
-    text,
-  });
+  let lastError: unknown;
+
+  for (const attempt of attempts) {
+    try {
+      const transport = nodemailer.createTransport({
+        host: attempt.host,
+        port: attempt.port,
+        secure: attempt.secure,
+        requireTLS: attempt.requireTLS,
+        auth: { user, pass },
+        connectionTimeout: 25_000,
+        greetingTimeout: 25_000,
+        socketTimeout: 40_000,
+        tls: {
+          minVersion: 'TLSv1.2',
+        },
+      });
+
+      await transport.sendMail({
+        from,
+        to,
+        replyTo: payload.email,
+        subject: subjectLine,
+        html,
+        text,
+      });
+
+      if (attempt.port !== Number(process.env.SMTP_PORT ?? 587)) {
+        console.warn(
+          `[contact-email] SMTP succeeded on fallback port ${attempt.port}`,
+        );
+      }
+      return;
+    } catch (err) {
+      lastError = err;
+      const code =
+        err && typeof err === 'object' && 'code' in err
+          ? String((err as { code?: string }).code ?? '')
+          : '';
+      console.error(
+        `[contact-email] SMTP failed on ${attempt.host}:${attempt.port} (${code || 'no-code'})`,
+      );
+    }
+  }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error('SMTP send failed on all attempts');
 }
 
 /** Sends notification to CONTACT_NOTIFY_EMAIL. Throws on provider errors. */
@@ -150,4 +213,58 @@ export function isEmailConfigured(): boolean {
     process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim(),
   );
   return Boolean(to && (hasResend || hasSmtp));
+}
+
+/** Non-throwing boot check — logs whether SMTP accepts auth (no email sent). */
+export async function verifyEmailTransport(): Promise<{
+  ok: boolean;
+  provider: 'resend' | 'smtp' | 'none';
+  detail?: string;
+}> {
+  if (!isEmailConfigured()) {
+    return { ok: false, provider: 'none', detail: 'not configured' };
+  }
+
+  if (process.env.RESEND_API_KEY?.trim()) {
+    return { ok: true, provider: 'resend', detail: 'api key present' };
+  }
+
+  const user = process.env.SMTP_USER?.trim();
+  const pass = process.env.SMTP_PASS?.trim()?.replace(/\s+/g, '');
+  if (!user || !pass) {
+    return { ok: false, provider: 'smtp', detail: 'missing credentials' };
+  }
+
+  const nodemailer = await import('nodemailer');
+  const attempts = smtpAttempts();
+
+  for (const attempt of attempts) {
+    try {
+      const transport = nodemailer.createTransport({
+        host: attempt.host,
+        port: attempt.port,
+        secure: attempt.secure,
+        requireTLS: attempt.requireTLS,
+        auth: { user, pass },
+        connectionTimeout: 15_000,
+        greetingTimeout: 15_000,
+        socketTimeout: 20_000,
+        tls: { minVersion: 'TLSv1.2' },
+      });
+      await transport.verify();
+      return {
+        ok: true,
+        provider: 'smtp',
+        detail: `verified ${attempt.host}:${attempt.port}`,
+      };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(
+        `[contact-email] verify failed ${attempt.host}:${attempt.port}:`,
+        message,
+      );
+    }
+  }
+
+  return { ok: false, provider: 'smtp', detail: 'verify failed on all ports' };
 }

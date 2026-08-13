@@ -12,7 +12,10 @@ import { assistantRouter } from './routes/assistant.js';
 import { contactRouter } from './routes/contact.js';
 import { cvRouter } from './routes/cv.js';
 import { contactCooldownMinutes } from './lib/contactCooldown.js';
-import { isEmailConfigured } from './lib/sendContactEmail.js';
+import {
+  isEmailConfigured,
+  verifyEmailTransport,
+} from './lib/sendContactEmail.js';
 import { isAssistantConfigured } from './services/assistantService.js';
 import { isTurnstileConfigured } from './lib/verifyTurnstile.js';
 
@@ -45,6 +48,15 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`Portfolio API: http://localhost:${PORT}/api/health`);
   if (isEmailConfigured()) {
     console.log('[contact] Email notifications: enabled');
+    void verifyEmailTransport().then((result) => {
+      if (result.ok) {
+        console.log(`[contact] Email transport OK (${result.provider}: ${result.detail})`);
+      } else {
+        console.error(
+          `[contact] Email transport FAILED (${result.provider}: ${result.detail}) — form submits will error until SMTP/Resend works`,
+        );
+      }
+    });
   } else {
     console.warn(
       '[contact] Email notifications: disabled — set CONTACT_NOTIFY_EMAIL + SMTP or Resend in .env.local',

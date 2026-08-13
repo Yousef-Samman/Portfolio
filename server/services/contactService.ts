@@ -49,10 +49,18 @@ export async function submitContactMessage(
     } catch (emailErr) {
       console.error(`[contact] ${record.id} saved; email failed:`, emailErr);
       if (emailExpected) {
+        const code =
+          emailErr && typeof emailErr === 'object' && 'code' in emailErr
+            ? String((emailErr as { code?: string }).code ?? '')
+            : '';
+        const authFailed = code === 'EAUTH' || /invalid login|username and password/i.test(
+          emailErr instanceof Error ? emailErr.message : '',
+        );
         return {
           ok: false,
-          error:
-            'Your message was received but the email notification failed. Please try again in a few minutes, or reach out on LinkedIn.',
+          error: authFailed
+            ? 'Email delivery is misconfigured on the server (SMTP login failed). Please try LinkedIn, or try again later.'
+            : 'Your message was received but the email notification failed. Please try again in a few minutes, or reach out on LinkedIn.',
         };
       }
       return { ok: true, id: record.id };

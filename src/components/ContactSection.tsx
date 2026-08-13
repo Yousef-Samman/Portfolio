@@ -50,7 +50,8 @@ export function ContactSection({
   const [website, setWebsite] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileResetKey, setTurnstileResetKey] = useState(0);
-  const [showCaptcha, setShowCaptcha] = useState(false);
+  // Show CAPTCHA as soon as a site key exists — waiting until after Submit hides widget load errors.
+  const [showCaptcha, setShowCaptcha] = useState(() => Boolean(turnstileSiteKey));
   const [serverCaptchaOn, setServerCaptchaOn] = useState<boolean | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [feedback, setFeedback] = useState('');
@@ -58,9 +59,13 @@ export function ContactSection({
   useEffect(() => {
     fetch(apiPath('/api/health'))
       .then((res) => res.json())
-      .then((data: { turnstile?: boolean }) => setServerCaptchaOn(Boolean(data.turnstile)))
+      .then((data: { turnstile?: boolean }) => {
+        const on = Boolean(data.turnstile);
+        setServerCaptchaOn(on);
+        if (on && turnstileSiteKey) setShowCaptcha(true);
+      })
       .catch(() => setServerCaptchaOn(null));
-  }, []);
+  }, [turnstileSiteKey]);
 
   const captchaMisconfigured =
     serverCaptchaOn === true && !captchaRequired && import.meta.env.DEV;
