@@ -8,8 +8,8 @@
  * - src/data/skills.ts
  * - Education copy in src/components/EducationSkillsSection.tsx
  *
- * Do not invent facts. Do not include GitHub repo URLs — the site intentionally
- * does not expose them to visitors.
+ * Do not invent facts. Do not invent or guess GitHub repo URLs — only URLs
+ * that appear in this grounding file may be shared (none are public yet).
  */
 
 export type AboutContext = {
@@ -46,6 +46,8 @@ export type AboutContext = {
     tools: readonly string[];
     highlights?: readonly string[];
     liveUrl?: string;
+    /** Optional team / ownership note (e.g. HackathonHub contribution scope). */
+    contribution?: string;
     problem?: string;
     approach?: string;
     decisions?: readonly { title: string; detail: string }[];
@@ -66,7 +68,7 @@ export const ABOUT_CONTEXT: AboutContext = {
     githubUsername: 'Yousef-Samman',
     linkedinSlug: 'yousef-samman-615bb2213',
     about:
-      "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently built Hackathon Hub, a multi-agent AI evaluation system with 9 parallel sub-agents. Backed by 4+ years in operations and customer-facing roles.",
+      "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently delivered the React/TypeScript frontend and UI/UX for HackathonHub, a three-person graduation project: a multi-agent AI evaluation system with 9 parallel sub-agents. Backed by 4+ years in operations and customer-facing roles.",
   },
   education: {
     degree: 'B.Sc. Information Technology',
@@ -144,6 +146,8 @@ export const ABOUT_CONTEXT: AboutContext = {
         'Nine parallel domain agents on Azure AI Foundry that score hackathon submissions with grounded, citeable reports.',
       description:
         'Platform that scores hackathon submissions by running nine domain-specific agents in parallel on Azure AI Foundry. Agents pull grounded research through MCP tools and persist findings in Cosmos DB so judges get structured, citeable evaluation reports instead of a single opaque score.',
+      contribution:
+        'HackathonHub was a three-person graduation project; my contribution was the React/TypeScript frontend and UI/UX — the organizer, judge, and participant dashboards, the review workflow, and the API client layer that consumed the evaluation backend.',
       tools: ['Azure AI Foundry', 'Python', 'MCP', 'Cosmos DB', 'React'],
       highlights: [
         'Nine parallel domain agents rather than a single monolithic prompt',
@@ -152,22 +156,22 @@ export const ABOUT_CONTEXT: AboutContext = {
       problem:
         'Hackathon judging often collapses into a single opaque score or a long free-text rubric that is hard to compare across teams. Reviewers need structured evaluation across multiple domains (technical depth, novelty, feasibility, and similar axes) with enough grounding that a score can be questioned and defended — not just accepted.',
       approach:
-        'HackathonHub runs nine domain-specific agents in parallel on Azure AI Foundry instead of one monolithic prompt. Each agent focuses on its own evaluation slice, can pull grounded research through MCP tools, and writes findings into Cosmos DB. A React front end surfaces the structured reports so judges see citeable evidence alongside scores rather than a black-box number.',
+        'The system runs nine domain-specific agents in parallel on Azure AI Foundry instead of one monolithic prompt. Each agent focuses on its own evaluation slice, can pull grounded research through MCP tools, and writes findings into Cosmos DB. On the frontend, I built the React/TypeScript UI that surfaces those structured reports — organizer, judge, and participant dashboards, the review workflow UX, and the API client that consumes the evaluation backend — so judges see citeable evidence alongside scores rather than a black-box number.',
       decisions: [
         {
           title: 'Nine parallel agents over one mega-prompt',
           detail:
-            'Splitting evaluation by domain keeps each agent’s context focused and makes partial failure easier to reason about — a weak answer in one domain does not silently poison the entire score.',
+            'The system uses nine parallel domain agents rather than a single monolithic prompt. Splitting evaluation by domain keeps each agent’s context focused and makes partial failure easier to reason about — a weak answer in one domain does not silently poison the entire score.',
         },
         {
           title: 'MCP tools for grounded research',
           detail:
-            'Agents are allowed to fetch supporting research through MCP tooling rather than relying only on model priors, so claims in the report can point at retrieved material instead of invented justification.',
+            'The system’s agents fetch supporting research through MCP tooling rather than relying only on model priors, so claims in the report can point at retrieved material instead of invented justification.',
         },
         {
           title: 'Cosmos DB for persisted findings',
           detail:
-            'Persisting agent findings in Cosmos DB keeps evaluations reviewable after the run finishes and supports structured retrieval for the judge-facing report UI.',
+            'The system persists agent findings in Cosmos DB so evaluations stay reviewable after the run finishes and support structured retrieval for the judge-facing report UI.',
         },
       ],
       challenge: {
@@ -177,7 +181,7 @@ export const ABOUT_CONTEXT: AboutContext = {
           'Parallel domain agents plus persisted findings give a structured, citeable trail. Judges see per-domain output grounded with MCP research rather than one opaque aggregate.',
       },
       outcome:
-        'Demonstrates a multi-agent evaluation workflow on Azure AI Foundry with MCP-backed research and Cosmos DB persistence, exposed through a React UI for structured judging reports.',
+        'A strong multi-agent evaluation workflow on Azure AI Foundry with MCP-backed research and Cosmos DB persistence, exposed through the React UI I built for structured judging reports.',
     },
     {
       title: 'Tafweej Hajj',
@@ -262,7 +266,7 @@ export function formatAboutContext(): string {
     `Name: ${c.identity.name}`,
     `Credentials: ${c.identity.credentialsLine}`,
     `Location: ${c.identity.location}`,
-    `GitHub username (no public repo links on the portfolio): ${c.identity.githubUsername}`,
+    `GitHub username (profile only; project repos are not publicly available yet): ${c.identity.githubUsername}`,
     `LinkedIn: linkedin.com/in/${c.identity.linkedinSlug}`,
     '',
     'About:',
@@ -293,6 +297,9 @@ export function formatAboutContext(): string {
     lines.push(`  Slug: ${project.slug}`);
     lines.push(`  Summary: ${project.summary}`);
     lines.push(`  ${project.description}`);
+    if (project.contribution) {
+      lines.push(`  Contribution: ${project.contribution}`);
+    }
     lines.push(`  Tech: ${project.tools.join(', ')}`);
     if (project.highlights?.length) {
       lines.push(`  Highlights: ${project.highlights.join('; ')}`);
@@ -304,7 +311,11 @@ export function formatAboutContext(): string {
       lines.push(`  Approach: ${project.approach}`);
     }
     if (project.decisions?.length) {
-      lines.push('  Design decisions:');
+      lines.push(
+        project.contribution
+          ? '  Architecture (system properties and why they work):'
+          : '  Design decisions:',
+      );
       for (const decision of project.decisions) {
         lines.push(`    - ${decision.title}: ${decision.detail}`);
       }
@@ -334,8 +345,10 @@ export function formatAboutContext(): string {
     '- Always speak in first person as Yousef (I / my / me).',
     '- Plain text only — never markdown bold, italics, or links.',
     '- When inviting contact, tell them to use the Get In Touch feature to reach out to you.',
-    '- Project source code is not publicly linked from the portfolio site.',
-    '- If asked for a repo/code link, say the code is not publicly linked from the site and they can ask you directly via Get In Touch.',
+    '- Freely discuss project stack, architecture, features, and decisions from the facts above even when source is private.',
+    '- HackathonHub: three-person graduation project. State the team context once when relevant, then discuss the system confidently. Use first person for frontend/UI/UX and API-integration work only. Describe the multi-agent backend, MCP tooling, Cosmos persistence, scoring, and why those choices are strong engineering — in full depth — as properties of the system, not as your personal decisions. Do not hedge, apologise, or sound uncertain. Do not invent rebuilds, reimplementations, or future plans.',
+    '- If asked for a repo/code link: repositories are not publicly available right now while you review and organise them; offer project Q&A or Get In Touch. Vary phrasing; no publish timeline promises.',
+    '- Never invent, guess, or construct a GitHub URL that is not listed above.',
     '- Do not invent live demos, employers, dates, or tech that are not listed above.',
   );
 

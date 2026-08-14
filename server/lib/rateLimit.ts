@@ -1,3 +1,5 @@
+import type { Request } from 'express';
+
 type Bucket = { count: number; resetAt: number };
 
 const buckets = new Map<string, Bucket>();
@@ -25,8 +27,6 @@ export function checkRateLimit(
   bucket.count += 1;
   return { allowed: true };
 }
-
-import type { Request } from 'express';
 
 export function clientIp(req: Request): string {
   const forwarded = req.headers['x-forwarded-for'];
