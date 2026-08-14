@@ -9,7 +9,7 @@
 | **CV status** | `GET /api/cv/status` — UI checks before showing the download button. |
 | **Health** | `GET /api/health` — uptime checks when you deploy. |
 | **SEO** | Meta description, Open Graph (`og:url` / `og:image`), Twitter card, `robots.txt`, `sitemap.xml`. Replace `YOUR_DOMAIN_HERE` before go-live. |
-| **Social preview** | `public/og-image.png` (1200×630-style) — wired in `index.html`. |
+| **Social preview** | `public/og-image.jpg` (1200×630-style) — wired in `index.html`. |
 | **Favicon** | `public/favicon.svg` |
 | **Theme** | Dark AI portfolio theme (`AiBackdrop`, `ModelBootOverlay`, `portfolio-ai`). |
 

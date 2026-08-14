@@ -165,7 +165,7 @@ After you know your final public URL (Vercel or custom domain), replace **every*
 2. **`index.html`** — `og:url`, `og:image`, `twitter:image`
 3. **`public/robots.txt`** (optional) — absolute `Sitemap:` line
 
-`public/og-image.png` is already in the repo; you only need the correct absolute domain in those meta tags.
+`public/og-image.jpg` is already in the repo; you only need the correct absolute domain in those meta tags.
 
 Then redeploy Vercel (push to GitHub or **Redeploy** in dashboard).
 
