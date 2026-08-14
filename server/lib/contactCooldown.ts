@@ -1,8 +1,16 @@
 const lastSubmitAt = new Map<string, number>();
 
+const DEFAULT_COOLDOWN_MINUTES = 15;
+
+/** 0/negative clamp to 1 min (not disable) — cooldown is abuse protection and no real deploy needs it off. */
+export function contactCooldownMinutes(): number {
+  const raw = Number(process.env.CONTACT_COOLDOWN_MINUTES ?? DEFAULT_COOLDOWN_MINUTES);
+  if (!Number.isFinite(raw)) return DEFAULT_COOLDOWN_MINUTES;
+  return Math.max(1, raw);
+}
+
 function cooldownMs(): number {
-  const minutes = Number(process.env.CONTACT_COOLDOWN_MINUTES ?? 15);
-  return Math.max(1, minutes) * 60 * 1000;
+  return contactCooldownMinutes() * 60 * 1000;
 }
 
 function normalizeEmail(email: string): string {
@@ -48,8 +56,4 @@ export function checkContactCooldown(
   }
 
   return { allowed: true };
-}
-
-export function contactCooldownMinutes(): number {
-  return Number(process.env.CONTACT_COOLDOWN_MINUTES ?? 15);
 }
