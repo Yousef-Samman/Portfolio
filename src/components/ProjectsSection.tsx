@@ -16,6 +16,7 @@ const NODE_LAYOUT: Record<string, { x: number; y: number }> = {
   'tafweej-hajj': { x: 82, y: 26 },
   'smart-notifier': { x: 84, y: 72 },
   travella: { x: 16, y: 74 },
+  portfolio: { x: 50, y: 78 },
 };
 
 function ProjectNode({

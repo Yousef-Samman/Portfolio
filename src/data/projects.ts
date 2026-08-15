@@ -121,6 +121,63 @@ export const PROJECTS: ProjectItem[] = [
     outcome:
       'A course/practice UI that demonstrates modular front-end structure for travel-style flows; intentionally not a production booking system.',
   },
+  {
+    id: '05',
+    slug: 'portfolio',
+    title: 'Portfolio (this site)',
+    category: 'Personal product · Full-stack + grounded AI',
+    summary:
+      'React + Express portfolio with a grounded Claude Haiku assistant, contact defenses, and Vercel/Render deploy.',
+    description:
+      'This site: a React 19 + TypeScript + Vite + Tailwind frontend and Express API with a grounded Claude assistant (Haiku). Answers come from a structured server-side context file injected into a strict system prompt — context-injection grounding, not RAG — with per-IP and global rate limits, markdown stripping, Turnstile-backed contact flow, and Resend email on Render.',
+    tools: [
+      'React',
+      'TypeScript',
+      'Vite',
+      'Tailwind CSS',
+      'Express',
+      'Anthropic Claude Haiku',
+      'Resend',
+      'Cloudflare Turnstile',
+      'Vitest',
+    ],
+    highlights: [
+      'Grounded ChatBot: system prompt + aboutContext, not RAG',
+      'Two-tier assistant limits: per-IP hourly + global daily cap',
+      'Contact: honeypot, cooldown, rate limit, Turnstile',
+    ],
+    liveUrl: 'https://portfolio-peach-kappa-zftmxyoyax.vercel.app/',
+    repoUrl: 'https://github.com/Yousef-Samman/Portfolio',
+    problem:
+      'A static portfolio alone under-sells AI engineering ability. Visitors and recruiters need a live, scoped demo of grounding, containment, and cost control — not an open-ended chatbot.',
+    approach:
+      'I built the full stack: React UI (including the ChatBot section), Express routes/services/lib, validators, rate limits, contact cooldown, Turnstile, and Resend on Render. The assistant uses claude-haiku-4-5-20251001 with max_tokens 500, a strict portfolio-only system prompt, and server-only aboutContext facts. Failures map to HTTP 429 / 503 / 502 via discriminated-union reasons.',
+    decisions: [
+      {
+        title: 'Context injection over RAG',
+        detail:
+          'The fact corpus is small, fixed, and fully known. Injecting structured context into the system prompt is simpler and more accurate here than retrieval over chunks.',
+      },
+      {
+        title: 'Haiku + token cap for cost/latency',
+        detail:
+          'Short factual answers over a fixed corpus favor a fast, cheap model with a hard max_tokens bound rather than a larger model.',
+      },
+      {
+        title: 'Per-IP and global daily caps',
+        detail:
+          'Hourly per-IP limits stop one visitor from burning quota; a global daily cap stops many IPs from inflating the Anthropic bill.',
+      },
+    ],
+    challenge: {
+      problem:
+        'Prompt-only formatting and safety rules drift; Render also blocks Gmail SMTP so contact email failed in production.',
+      solution:
+        'Deterministic markdown stripping after the model response, plus Resend over HTTPS with host detection so Render prefers Resend while local SMTP still works.',
+    },
+    outcome:
+      'A live portfolio that demonstrates grounded AI engineering: accurate portfolio Q&A, abuse/cost controls, and a full-stack deploy on Vercel + Render.',
+  },
 ];
 
 export function getProjectBySlug(slug: string): ProjectItem | undefined {

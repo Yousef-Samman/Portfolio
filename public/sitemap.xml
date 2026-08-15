@@ -31,6 +31,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/projects/portfolio</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://portfolio-peach-kappa-zftmxyoyax.vercel.app/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>

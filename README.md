@@ -26,6 +26,77 @@ Visitors ask about education, experience, projects, and skills. Answers come onl
 
 Endpoint: `POST /api/assistant` (validated body + optional multi-turn `history`).
 
+### ChatBot workflow (Mermaid)
+
+Paste either diagram into [mermaid.live](https://mermaid.live) to present or export.
+
+**1 — Request path (end-to-end)**
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Visitor
+  participant UI as AssistantSection (React)
+  participant API as POST /api/assistant
+  participant Val as parseAssistantBody
+  participant RL as rateLimit (per-IP hourly)
+  participant Svc as assistantService
+  participant Cap as rateLimit (global daily)
+  participant LLM as Claude Haiku
+  participant Strip as stripAssistantMarkdown
+
+  Visitor->>UI: Ask portfolio question
+  UI->>API: question + optional history
+  API->>API: ANTHROPIC_API_KEY set?
+  alt not configured
+    API-->>UI: 503 not_configured
+  end
+  API->>Val: Validate length + history
+  alt invalid
+    API-->>UI: 400
+  end
+  API->>RL: Check IP hourly cap (default 20)
+  alt over hourly
+    API-->>UI: 429 hourly
+  end
+  API->>Svc: answerAssistantQuestion
+  Svc->>Cap: Check global daily cap (default 100)
+  alt over daily
+    Svc-->>API: 429 daily_cap
+    API-->>UI: 429
+  end
+  Svc->>LLM: system prompt + aboutContext + messages
+  LLM-->>Svc: Model text
+  Svc->>Strip: Remove markdown drift
+  Strip-->>Svc: Plain-text answer
+  Svc-->>API: ok + answer
+  API-->>UI: 200
+  UI-->>Visitor: Grounded reply
+```
+
+**2 — Grounding and containment layers**
+
+```mermaid
+flowchart TB
+  Q[Visitor question] --> Gate{Configured + valid + under limits?}
+  Gate -->|No| Err[429 / 400 / 503]
+  Gate -->|Yes| Prompt[System prompt: portfolio-only first person]
+  Prompt --> Ctx[aboutContext.ts facts injected]
+  Ctx --> Model["claude-haiku-4-5-20251001 max_tokens 500"]
+  Model --> Rules{On-topic and in grounding?}
+  Rules -->|No| Decline[Decline / say unknown / Get In Touch]
+  Rules -->|Yes| Raw[Model text]
+  Raw --> Strip[Deterministic markdown strip]
+  Strip --> Out[Plain-text answer to UI]
+
+  subgraph Grounding choice
+    RAG[RAG over chunks]
+    Inj[Context injection]
+  end
+  Inj -.->|chosen: small fixed corpus| Ctx
+  RAG -.->|not used| Ctx
+```
+
 ## Architecture
 
 ```

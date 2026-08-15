@@ -68,7 +68,7 @@ export const ABOUT_CONTEXT: AboutContext = {
     githubUsername: 'Yousef-Samman',
     linkedinSlug: 'yousef-samman-615bb2213',
     about:
-      "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently delivered the React/TypeScript frontend and UI/UX for HackathonHub, a three-person graduation project: a multi-agent AI evaluation system with 9 parallel sub-agents. Backed by 4+ years in operations and customer-facing roles.",
+      "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently delivered the React/TypeScript frontend and UI/UX for HackathonHub, a three-person graduation project: a multi-agent AI evaluation system with 9 parallel sub-agents. I also built this portfolio site end-to-end — React + Express with a grounded Claude Haiku assistant (context-injection, not RAG), contact defenses, and Vercel/Render deploy. Backed by 4+ years in operations and customer-facing roles.",
   },
   education: {
     degree: 'B.Sc. Information Technology',
@@ -252,10 +252,75 @@ export const ABOUT_CONTEXT: AboutContext = {
       outcome:
         'A course/practice UI that demonstrates modular front-end structure for travel-style flows; intentionally not a production booking system.',
     },
+    {
+      title: 'Portfolio (this site)',
+      slug: 'portfolio',
+      category: 'Personal product · Full-stack + grounded AI',
+      summary:
+        'React + Express portfolio with a grounded Claude Haiku assistant, contact defenses, and Vercel/Render deploy.',
+      description:
+        'This portfolio website — the one visitors are using. React 19 + TypeScript + Vite + Tailwind frontend and an Express API. Includes a grounded Claude assistant (model claude-haiku-4-5-20251001, max_tokens 500) that answers only from server-side aboutContext facts via context-injection grounding (not RAG), with prompt-injection refusal, deterministic markdown stripping, per-IP hourly limits (default 20), and a global daily cap (default 100). Contact uses honeypot, cooldown, rate limit, Turnstile, and Resend on Render (SMTP blocked there). Solo project: I designed and built the full stack.',
+      tools: [
+        'React',
+        'TypeScript',
+        'Vite',
+        'Tailwind CSS',
+        'Express',
+        'Anthropic Claude Haiku',
+        'Resend',
+        'Cloudflare Turnstile',
+        'Vitest',
+      ],
+      highlights: [
+        'Grounded ChatBot with system prompt + aboutContext (not RAG)',
+        'Two-tier assistant rate limits: per-IP hourly + global daily',
+        'Contact defenses: honeypot, cooldown, rate limit, Turnstile',
+      ],
+      liveUrl: 'https://portfolio-peach-kappa-zftmxyoyax.vercel.app/',
+      problem:
+        'A static portfolio alone under-sells AI engineering ability. Visitors need a live, scoped demo of grounding, containment, and cost control.',
+      approach:
+        'I built the UI (including the ChatBot section), Express routes/services/lib, validators, rate limits, contact cooldown, Turnstile, and Resend email. Assistant failures map to HTTP 429 / 503 / 502 via discriminated-union reasons. Deployed frontend on Vercel and API on Render.',
+      decisions: [
+        {
+          title: 'Context injection over RAG',
+          detail:
+            'The fact corpus is small, fixed, and fully known. Injecting structured context into the system prompt is simpler and more accurate than retrieval over chunks.',
+        },
+        {
+          title: 'Haiku + token cap',
+          detail:
+            'Short factual answers over a fixed corpus favor a fast, cheap model with a hard max_tokens bound.',
+        },
+        {
+          title: 'Per-IP and global daily caps',
+          detail:
+            'Hourly per-IP limits stop one visitor from burning quota; a global daily cap stops many IPs from inflating the Anthropic bill.',
+        },
+      ],
+      challenge: {
+        problem:
+          'Prompt-only formatting rules drift; Render blocks Gmail SMTP so contact email failed in production.',
+        solution:
+          'Deterministic markdown stripping after model output, and Resend over HTTPS with host detection so Render prefers Resend while local SMTP still works.',
+      },
+      outcome:
+        'A live portfolio that demonstrates grounded AI engineering: accurate portfolio Q&A, abuse/cost controls, and full-stack deploy on Vercel + Render.',
+    },
   ],
   skills: {
-    stack: ['React', 'Node.js', 'JavaScript', 'Vite', 'HTML5', 'CSS3'],
-    tools: ['Mapbox', 'Socket.IO', 'Supabase', 'Git', 'Tailwind CSS'],
+    stack: ['React', 'TypeScript', 'Node.js', 'JavaScript', 'Vite', 'HTML5', 'CSS3', 'Express'],
+    tools: [
+      'Anthropic Claude',
+      'Mapbox',
+      'Socket.IO',
+      'Supabase',
+      'Git',
+      'Tailwind CSS',
+      'Vitest',
+      'Resend',
+      'Cloudflare Turnstile',
+    ],
   },
 };
 
@@ -266,7 +331,7 @@ export function formatAboutContext(): string {
     `Name: ${c.identity.name}`,
     `Credentials: ${c.identity.credentialsLine}`,
     `Location: ${c.identity.location}`,
-    `GitHub username (profile only; project repos are not publicly available yet): ${c.identity.githubUsername}`,
+    `GitHub: github.com/${c.identity.githubUsername} — Portfolio repo is public at github.com/${c.identity.githubUsername}/Portfolio. Other project repos (HackathonHub, Tafweej Hajj, Smart Notifier, Travella) are not publicly available yet.`,
     `LinkedIn: linkedin.com/in/${c.identity.linkedinSlug}`,
     '',
     'About:',
@@ -348,7 +413,8 @@ export function formatAboutContext(): string {
     '- Freely discuss project stack, architecture, features, and decisions from the facts above even when source is private.',
     '- HackathonHub: three-person graduation project. This attribution also applies to broad AI/LLM experience questions that cite HackathonHub — never claim you designed or decided the multi-agent backend, MCP tooling, Cosmos persistence, or scoring. State the team context once when relevant, then discuss the system confidently in full depth as properties of the system (and why those choices are strong engineering). Use first person only for frontend/UI/UX, API integration, and how you worked against that backend. Do not hedge, apologise, or sound uncertain. Do not invent rebuilds, reimplementations, or future plans.',
     '- If asked for a repo/code link: repositories are not publicly available right now while you review and organise them; offer project Q&A or Get In Touch. Vary phrasing; no publish timeline promises.',
-    '- Never invent, guess, or construct a GitHub URL that is not listed above.',
+    '- Never invent, guess, or construct a GitHub URL that is not listed above. The Portfolio repo URL above is public and may be shared; other project repos stay private.',
+    '- When asked how this portfolio or its ChatBot was built: use the Portfolio (this site) project facts — React/TypeScript/Vite/Tailwind, Express, Claude Haiku, context-injection grounding (not RAG), rate limits, Turnstile, Resend. Speak in first person; you built this stack.',
     '- Do not invent live demos, employers, dates, or tech that are not listed above.',
   );
 
