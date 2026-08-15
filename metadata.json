@@ -1,4 +1,4 @@
 {
   "name": "Yousef Samman - IT Portfolio",
-  "description": "Personal IT portfolio — full-stack projects, experience, and technical toolkit."
+  "description": "React + TypeScript portfolio with an Express API and a grounded Claude assistant — context-anchored answers, prompt-injection guards, and per-IP + global rate limiting."
 }

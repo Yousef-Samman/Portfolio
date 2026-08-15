@@ -1,6 +1,6 @@
 # Codebase structure
 
-IT portfolio for **Yousef Samman** — single-page React site with a small Express API for contact form, CV download, and health checks.
+IT portfolio for **Yousef Samman** — React frontend with an Express API for contact, CV download, grounded ChatBot (`POST /api/assistant`), and health checks.
 
 ## Folder overview
 
@@ -13,13 +13,14 @@ yousef-samman-portfolio/
 │   └── sitemap.xml
 ├── server/                 # Express API (port 3001)
 │   ├── index.ts            # App entry, mounts routes & middleware
+│   ├── data/               # Assistant grounding (aboutContext)
 │   ├── middleware/         # Cross-cutting HTTP middleware
 │   ├── routes/             # Request/response handlers only
-│   ├── services/           # Business logic (contact submission)
+│   ├── services/           # Business logic (contact, assistant)
 │   └── lib/                # Persistence, email, validation, rate limits
 ├── src/                    # React frontend (port 3000)
 │   ├── pages/              # Page-level layout & composition
-│   ├── components/         # Reusable UI sections
+│   ├── components/         # Reusable UI sections (incl. AssistantSection)
 │   ├── data/               # Static portfolio content
 │   ├── hooks/              # Reusable React logic
 │   ├── lib/                # Frontend API client & analytics
@@ -27,9 +28,10 @@ yousef-samman-portfolio/
 │   ├── config/             # App constants (nav section IDs)
 │   ├── types/              # Shared TypeScript types
 │   └── utils/              # Pure helpers (tenure formatting)
-├── docs/                   # Feature specs (e.g. contact admin plan)
+├── docs/                   # Specs, go-live, prompts, screenshots
+│   └── CODEBASE_STRUCTURE.md   # This file
 ├── .env.example            # Placeholder env vars (no secrets)
-└── CODEBASE_STRUCTURE.md   # This file
+└── README.md
 ```
 
 ## Frontend (`src/`)
@@ -77,12 +79,16 @@ yousef-samman-portfolio/
 | `index.ts` | Express app, JSON body, CORS, health, route mount |
 | `middleware/cors.ts` | CORS headers + OPTIONS preflight |
 | `routes/contact.ts` | `POST /api/contact` — rate limit, validate, delegate to service |
+| `routes/assistant.ts` | `POST /api/assistant` — hourly limit, validate, delegate to service |
 | `routes/cv.ts` | `GET /api/cv`, `GET /api/cv/status` |
 | `services/contactService.ts` | Save message + send notification email |
-| `lib/validators.ts` | `parseContactBody`, honeypot (`website` field) |
+| `services/assistantService.ts` | Claude call, daily cap, markdown strip |
+| `data/aboutContext.ts` | Server-only grounding facts for the assistant |
+| `lib/validators.ts` | `parseContactBody`, `parseAssistantBody`, honeypot (`website` field) |
 | `lib/contactStore.ts` | Append messages to `data/contact-messages.jsonl` |
-| `lib/rateLimit.ts` | In-memory IP rate limit + daily email cap key |
-| `lib/sendContactEmail.ts` | Gmail SMTP (Nodemailer) or Resend API |
+| `lib/rateLimit.ts` | In-memory IP / global rate limit |
+| `lib/contactCooldown.ts` | IP + email cooldown window |
+| `lib/sendContactEmail.ts` | Resend HTTPS or Gmail SMTP (Nodemailer) |
 
 ### Main backend flow (contact)
 
@@ -133,12 +139,15 @@ Copy `.env.example` → `.env.local` (never commit `.env.local`).
 | `CV_FILENAME` | PDF name under `public/cv/` |
 | `CONTACT_COOLDOWN_MINUTES` | Min minutes between messages (same IP or email; default **15**) |
 | `CONTACT_RATE_LIMIT_PER_HOUR` | Max submissions per IP per rolling hour (default **8**) |
+| `ANTHROPIC_API_KEY` | Claude API key for the grounded assistant |
+| `ASSISTANT_RATE_LIMIT_PER_HOUR` | Max assistant questions per IP per hour (default **20**) |
+| `ASSISTANT_DAILY_GLOBAL_CAP` | Max assistant calls per day across all visitors (default **100**) |
 | `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key (frontend) |
 | `TURNSTILE_SECRET_KEY` | Turnstile secret (server verification) |
 | `CONTACT_NOTIFY_EMAIL` | Inbox for form alerts |
 | `CONTACT_EMAIL_DAILY_CAP` | Max notification emails per 24h |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Gmail SMTP |
-| `RESEND_API_KEY`, `CONTACT_EMAIL_FROM` | Optional Resend instead of SMTP |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Gmail SMTP (local) |
+| `RESEND_API_KEY`, `CONTACT_EMAIL_FROM` | Resend HTTPS (required on Render) |
 | `VITE_PLAUSIBLE_DOMAIN` | Optional analytics (frontend) |
 
 ## How to run
