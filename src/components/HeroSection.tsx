@@ -19,7 +19,7 @@ export function HeroSection({ theme, cvAvailable, cvDownloadUrl }: HeroSectionPr
             Portfolio home
           </p>
           <p className="max-w-2xl text-sm text-slate-400 sm:text-base">
-            Fresh Graduate · AI engineering track · grounded ChatBot for recruiters and collaborators.
+            Fresh IT Graduate · AI engineering track · grounded ChatBot for recruiters and collaborators.
           </p>
         </div>
 

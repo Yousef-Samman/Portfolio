@@ -7,13 +7,13 @@ You're working in the `Yousef-Samman/Portfolio` repo (React 19 + TypeScript + Vi
 `CONTACT_INFO.credentialsLine` currently reads:
 
 ```ts
-credentialsLine: 'Fresh Graduate | AI Focus | CCST | KAU',
+credentialsLine: 'Fresh IT Graduate | AI Focus | CCST | KAU',
 ```
 
 Every other surface (the About paragraph in this same file, the CV, LinkedIn) already says "AI Engineer," not "AI Focus." Update it to:
 
 ```ts
-credentialsLine: 'Fresh Graduate | AI Engineer | CCST | KAU',
+credentialsLine: 'Fresh IT Graduate | AI Engineer | CCST | KAU',
 ```
 
 Search the rest of the codebase for any other lingering instance of "AI Focus" and update it to "AI Engineer" too, so nothing's left inconsistent.
