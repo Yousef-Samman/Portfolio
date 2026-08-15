@@ -62,7 +62,7 @@ Use **Resend** (or similar transactional API), not your Gmail password in code.
 |------------|--------|
 | Free tier for low volume | Fine for a portfolio |
 | API key in `.env` only | Never commit keys |
-| Can send **to** your Gmail | `CONTACT_NOTIFY_EMAIL=yousef.m.samman@gmail.com` |
+| Can send **to** your Gmail | `CONTACT_NOTIFY_EMAIL=your-private-email@gmail.com` |
 | From address | Use a verified domain, or Resend’s sandbox for testing |
 
 **Alternative:** SMTP (Gmail App Password) — works but less ideal for apps; prefer Resend for production.

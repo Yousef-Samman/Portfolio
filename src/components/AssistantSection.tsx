@@ -64,7 +64,10 @@ export function AssistantSection({ theme }: AssistantSectionProps) {
   const [error, setError] = useState('');
   const [liveAnnouncement, setLiveAnnouncement] = useState('');
 
+  // Only scroll after the visitor starts chatting — never on first mount,
+  // or opening `/` jumps the page down to the ChatBot section.
   useEffect(() => {
+    if (messages.length === 0 && !sending) return;
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, sending]);
 
