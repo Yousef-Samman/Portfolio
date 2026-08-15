@@ -8,7 +8,7 @@ export const CONTACT_INFO = {
 
 /** About copy shown beside the hero photo. */
 export const HERO_INTRO_PARAGRAPHS = [
-  "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently built Hackathon Hub, a multi-agent AI evaluation system with 9 parallel sub-agents. Backed by 4+ years in operations and customer-facing roles.",
+  "Fresh IT Graduate (KAU, GPA 4.83/5.0), AI Engineer building toward production AI systems. Currently completing IBM's Generative AI Engineering Professional Certificate that is covering LLMs, transformers, RAG, LangChain, and fine-tuning. Most recently delivered the React/TypeScript frontend and UI/UX for HackathonHub, a three-person graduation project: a multi-agent AI evaluation system with 9 parallel sub-agents. Backed by 4+ years in operations and customer-facing roles.",
 ] as const;
 
 export const EDUCATION_GPA = '4.83 / 5.0';

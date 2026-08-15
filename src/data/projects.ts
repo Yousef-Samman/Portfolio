@@ -5,12 +5,12 @@ export const PROJECTS: ProjectItem[] = [
     id: '01',
     slug: 'hackathonhub',
     title: 'HackathonHub',
-    category: 'Graduation project · AI / Multi-Agent',
+    category: 'Graduation project · AI / Multi-Agent · three-person team',
     featured: true,
     summary:
       'Nine parallel domain agents on Azure AI Foundry that score hackathon submissions with grounded, citeable reports.',
     description:
-      'Platform that scores hackathon submissions by running nine domain-specific agents in parallel on Azure AI Foundry. Agents pull grounded research through MCP tools and persist findings in Cosmos DB so judges get structured, citeable evaluation reports instead of a single opaque score.',
+      'Three-person graduation project that scores hackathon submissions with nine domain-specific agents in parallel on Azure AI Foundry. Agents pull grounded research through MCP tools and persist findings in Cosmos DB so judges get structured, citeable evaluation reports instead of a single opaque score. My contribution was the React/TypeScript frontend and UI/UX.',
     tools: ['Azure AI Foundry', 'Python', 'MCP', 'Cosmos DB', 'React'],
     highlights: [
       'Nine parallel domain agents rather than a single monolithic prompt',
@@ -19,7 +19,7 @@ export const PROJECTS: ProjectItem[] = [
     problem:
       'Hackathon judging often collapses into a single opaque score or a long free-text rubric that is hard to compare across teams. Reviewers need structured evaluation across multiple domains (technical depth, novelty, feasibility, and similar axes) with enough grounding that a score can be questioned and defended — not just accepted.',
     approach:
-      'HackathonHub runs nine domain-specific agents in parallel on Azure AI Foundry instead of one monolithic prompt. Each agent focuses on its own evaluation slice, can pull grounded research through MCP tools, and writes findings into Cosmos DB. A React front end surfaces the structured reports so judges see citeable evidence alongside scores rather than a black-box number.',
+      'The system runs nine domain-specific agents in parallel on Azure AI Foundry instead of one monolithic prompt. Each agent focuses on its own evaluation slice, can pull grounded research through MCP tools, and writes findings into Cosmos DB. I built the React/TypeScript frontend — organizer, judge, and participant dashboards, the review workflow, and the API client — so judges see citeable evidence alongside scores rather than a black-box number.',
     decisions: [
       {
         title: 'Nine parallel agents over one mega-prompt',
@@ -44,7 +44,7 @@ export const PROJECTS: ProjectItem[] = [
         'Parallel domain agents plus persisted findings give a structured, citeable trail. Judges see per-domain output grounded with MCP research rather than one opaque aggregate.',
     },
     outcome:
-      'Demonstrates a multi-agent evaluation workflow on Azure AI Foundry with MCP-backed research and Cosmos DB persistence, exposed through a React UI for structured judging reports.',
+      'A strong multi-agent evaluation workflow on Azure AI Foundry with MCP-backed research and Cosmos DB persistence, exposed through the React UI I built for structured judging reports.',
   },
   {
     id: '02',
